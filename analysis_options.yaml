@@ -2,6 +2,11 @@ include: package:pedantic_mono/analysis_options.yaml
 
 linter:
   rules:
+    # カスケード記法を強制しない
+    cascade_invocations: false
+
+    # パッケージ内のimportは相対パスで書く
+    prefer_relative_imports: true
 
 # see: https://github.com/rrousselGit/freezed/issues/488#issuecomment-894358980
 analyzer:
