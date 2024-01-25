@@ -19,12 +19,7 @@ class App extends ConsumerWidget {
       theme: lightThemeData,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
-      routerConfig: appRouter.config(
-        // ディープリンクでページスタックを積むようにする
-        includePrefixMatches: true,
-        // オブザーバーを登録
-        navigatorObservers: () => [],
-      ),
+      routerConfig: appRouter,
     );
   }
 }

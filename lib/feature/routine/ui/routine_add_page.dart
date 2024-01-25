@@ -1,9 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'component/add_routine.dart';
 
-@RoutePage()
 class RoutineAddPage extends StatelessWidget {
   const RoutineAddPage({super.key});
 
