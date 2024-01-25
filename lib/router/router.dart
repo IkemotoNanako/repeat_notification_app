@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
 import '../feature/routine/ui/routine_router_page.dart';
 
@@ -30,6 +31,10 @@ class AppRouter extends _$AppRouter {
             AutoRoute(
               initial: true,
               page: RoutineIndexRoute.page,
+            ),
+            AutoRoute(
+              path: 'add',
+              page: RoutineAddRoute.page,
             ),
           ],
         ),
