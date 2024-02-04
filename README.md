@@ -103,7 +103,7 @@ feature first を採用しています。lib 配下のフォルダ構成は次�
 次のパッケージを利用する場合は、適宜コードの自動生成が必要です。
 
 - [riverpod_generator](https://pub.dev/packages/riverpod_generator)
-- [auto_route_generator](https://pub.dev/packages/auto_route_generator)
+- [go_router_builder](https://pub.dev/packages/go_router_builder)
 - [freezed](https://pub.dev/packages/freezed)
 - [flutter_gen_runner](https://pub.dev/packages/flutter_gen_runner)
 
