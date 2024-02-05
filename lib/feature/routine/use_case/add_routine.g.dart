@@ -6,7 +6,7 @@ part of 'add_routine.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addRoutineUseCaseHash() => r'efe38daabb9f471a5c0abba08add523e5530db3d';
+String _$addRoutineUseCaseHash() => r'0746443e0c1d5e44eb1de2481d06d99c0d12f609';
 
 /// See also [AddRoutineUseCase].
 @ProviderFor(AddRoutineUseCase)

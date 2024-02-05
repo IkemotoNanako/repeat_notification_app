@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/data/isar/isar.dart';
 import '../data/routine.dart';
+import '../state/routine_form_values.dart';
 
 part 'add_routine.g.dart';
 
@@ -18,8 +19,9 @@ class AddRoutineUseCase extends _$AddRoutineUseCase {
     state = await AsyncValue.guard(() async {
       final isar = ref.read(isarProvider);
       await isar.writeTxn(() async {
-        // TODO(susa): 仮実装
-        await isar.routines.put(Routine());
+        final formValues =
+            ref.read(currentRoutineFormValuesNotifierProvider).requireValue;
+        await isar.routines.put(formValues.toEntity());
       });
     });
   }
