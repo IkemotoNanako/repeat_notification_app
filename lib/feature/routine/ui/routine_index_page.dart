@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../core/ui/component/material.dart';
 import '../../../core/ui/component/riverpod.dart';
 import '../data/routine.dart';
 import '../state/routine.dart';
+import '../use_case/delete_routine.dart';
 import '../use_case/update_routine.dart';
 import 'component/navigate_routine_add_page.dart';
 
@@ -62,22 +64,38 @@ class _ListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listenAsync(updateRoutineUseCaseProvider);
-    return ListTile(
-      onTap: () {
-        // TODO(susa): 編集画面に遷移する
-      },
-      title: Text(
-        routine.notificationTimeOfDay.format(context),
-        style: context.displayMedium?.copyWith(
-          color: routine.state ? null : context.outline,
-        ),
+    ref.listenAsync(deleteRoutineUseCaseProvider);
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        extentRatio: 0.2,
+        children: [
+          SlidableAction(
+            onPressed: (context) =>
+                ref.read(deleteRoutineUseCaseProvider.notifier).invoke(routine),
+            backgroundColor: context.error,
+            foregroundColor: context.onError,
+            label: '削除',
+          ),
+        ],
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      trailing: Switch(
-        value: routine.state,
-        onChanged: (value) => ref
-            .read(updateRoutineUseCaseProvider.notifier)
-            .invoke(routine, newState: value),
+      child: ListTile(
+        onTap: () {
+          // TODO(susa): 編集画面に遷移する
+        },
+        title: Text(
+          routine.notificationTimeOfDay.format(context),
+          style: context.displayMedium?.copyWith(
+            color: routine.state ? null : context.outline,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        trailing: Switch(
+          value: routine.state,
+          onChanged: (value) => ref
+              .read(updateRoutineUseCaseProvider.notifier)
+              .invoke(routine, newState: value),
+        ),
       ),
     );
   }
@@ -89,7 +107,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Divider(
-      height: 0,
+      height: 1,
       indent: 16,
       endIndent: 16,
     );
