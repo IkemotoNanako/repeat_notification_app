@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../../core/ui/component/material.dart';
 import '../../../core/ui/component/riverpod.dart';
 import '../data/routine.dart';
 import '../state/routine.dart';
+import '../use_case/delete_routine.dart';
+import '../use_case/update_routine.dart';
 import 'component/navigate_routine_add_page.dart';
 
 class RoutineIndexPage extends StatelessWidget {
@@ -13,7 +17,7 @@ class RoutineIndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ルーティン一覧'),
+        title: const Text('ルーティン'),
         actions: const [
           NavigateRoutineAddPageButton(),
         ],
@@ -35,16 +39,22 @@ class _Body extends ConsumerWidget {
     final asyncValue = ref.watch(routinesProvider);
     return asyncValue.whenWidget(
       data: (routines) {
-        return ListView.builder(
+        if (routines.isEmpty) {
+          return const Center(
+            child: Text('ルーティンがありません'),
+          );
+        }
+        return ListView.separated(
           itemCount: routines.length,
           itemBuilder: (context, index) => _ListTile(routine: routines[index]),
+          separatorBuilder: (context, index) => const _Divider(),
         );
       },
     );
   }
 }
 
-class _ListTile extends StatelessWidget {
+class _ListTile extends ConsumerWidget {
   const _ListTile({
     required this.routine,
   });
@@ -52,12 +62,54 @@ class _ListTile extends StatelessWidget {
   final Routine routine;
 
   @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listenAsync(updateRoutineUseCaseProvider);
+    ref.listenAsync(deleteRoutineUseCaseProvider);
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        extentRatio: 0.2,
+        children: [
+          SlidableAction(
+            onPressed: (context) =>
+                ref.read(deleteRoutineUseCaseProvider.notifier).invoke(routine),
+            backgroundColor: context.error,
+            foregroundColor: context.onError,
+            label: '削除',
+          ),
+        ],
+      ),
+      child: ListTile(
+        onTap: () {
+          // TODO(susa): 編集画面に遷移する
+        },
+        title: Text(
+          routine.notificationTimeOfDay.format(context),
+          style: context.displayMedium?.copyWith(
+            color: routine.state ? null : context.outline,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        trailing: Switch(
+          value: routine.state,
+          onChanged: (value) => ref
+              .read(updateRoutineUseCaseProvider.notifier)
+              .invoke(routine, newState: value),
+        ),
+      ),
+    );
+  }
+}
+
+class _Divider extends StatelessWidget {
+  const _Divider();
+
+  @override
   Widget build(BuildContext context) {
-    // TODO(any): 表示は仮実装
-    return ListTile(
-      leading: Text(routine.id.toString()),
-      title: Text(routine.notificationTime.toString()),
-      subtitle: Text(routine.createdAt.toString()),
+    return const Divider(
+      height: 1,
+      indent: 16,
+      endIndent: 16,
     );
   }
 }
