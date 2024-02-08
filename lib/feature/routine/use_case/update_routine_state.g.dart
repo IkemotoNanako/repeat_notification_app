@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'delete_routine.dart';
+part of 'update_routine_state.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deleteRoutineUseCaseHash() =>
-    r'cafa19dac87720db040ead9cba6837ae427fb326';
+String _$updateRoutineStateUseCaseHash() =>
+    r'0c2b90c300cf52ed7458af837669e211aab94dce';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,7 +30,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$DeleteRoutineUseCase
+abstract class _$UpdateRoutineStateUseCase
     extends BuildlessAutoDisposeAsyncNotifier<void> {
   late final Routine routine;
 
@@ -39,27 +39,27 @@ abstract class _$DeleteRoutineUseCase
   );
 }
 
-/// See also [DeleteRoutineUseCase].
-@ProviderFor(DeleteRoutineUseCase)
-const deleteRoutineUseCaseProvider = DeleteRoutineUseCaseFamily();
+/// See also [UpdateRoutineStateUseCase].
+@ProviderFor(UpdateRoutineStateUseCase)
+const updateRoutineStateUseCaseProvider = UpdateRoutineStateUseCaseFamily();
 
-/// See also [DeleteRoutineUseCase].
-class DeleteRoutineUseCaseFamily extends Family<AsyncValue<void>> {
-  /// See also [DeleteRoutineUseCase].
-  const DeleteRoutineUseCaseFamily();
+/// See also [UpdateRoutineStateUseCase].
+class UpdateRoutineStateUseCaseFamily extends Family<AsyncValue<void>> {
+  /// See also [UpdateRoutineStateUseCase].
+  const UpdateRoutineStateUseCaseFamily();
 
-  /// See also [DeleteRoutineUseCase].
-  DeleteRoutineUseCaseProvider call(
+  /// See also [UpdateRoutineStateUseCase].
+  UpdateRoutineStateUseCaseProvider call(
     Routine routine,
   ) {
-    return DeleteRoutineUseCaseProvider(
+    return UpdateRoutineStateUseCaseProvider(
       routine,
     );
   }
 
   @override
-  DeleteRoutineUseCaseProvider getProviderOverride(
-    covariant DeleteRoutineUseCaseProvider provider,
+  UpdateRoutineStateUseCaseProvider getProviderOverride(
+    covariant UpdateRoutineStateUseCaseProvider provider,
   ) {
     return call(
       provider.routine,
@@ -78,30 +78,31 @@ class DeleteRoutineUseCaseFamily extends Family<AsyncValue<void>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'deleteRoutineUseCaseProvider';
+  String? get name => r'updateRoutineStateUseCaseProvider';
 }
 
-/// See also [DeleteRoutineUseCase].
-class DeleteRoutineUseCaseProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<DeleteRoutineUseCase, void> {
-  /// See also [DeleteRoutineUseCase].
-  DeleteRoutineUseCaseProvider(
+/// See also [UpdateRoutineStateUseCase].
+class UpdateRoutineStateUseCaseProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<UpdateRoutineStateUseCase,
+        void> {
+  /// See also [UpdateRoutineStateUseCase].
+  UpdateRoutineStateUseCaseProvider(
     Routine routine,
   ) : this._internal(
-          () => DeleteRoutineUseCase()..routine = routine,
-          from: deleteRoutineUseCaseProvider,
-          name: r'deleteRoutineUseCaseProvider',
+          () => UpdateRoutineStateUseCase()..routine = routine,
+          from: updateRoutineStateUseCaseProvider,
+          name: r'updateRoutineStateUseCaseProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$deleteRoutineUseCaseHash,
-          dependencies: DeleteRoutineUseCaseFamily._dependencies,
+                  : _$updateRoutineStateUseCaseHash,
+          dependencies: UpdateRoutineStateUseCaseFamily._dependencies,
           allTransitiveDependencies:
-              DeleteRoutineUseCaseFamily._allTransitiveDependencies,
+              UpdateRoutineStateUseCaseFamily._allTransitiveDependencies,
           routine: routine,
         );
 
-  DeleteRoutineUseCaseProvider._internal(
+  UpdateRoutineStateUseCaseProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -115,7 +116,7 @@ class DeleteRoutineUseCaseProvider
 
   @override
   FutureOr<void> runNotifierBuild(
-    covariant DeleteRoutineUseCase notifier,
+    covariant UpdateRoutineStateUseCase notifier,
   ) {
     return notifier.build(
       routine,
@@ -123,10 +124,10 @@ class DeleteRoutineUseCaseProvider
   }
 
   @override
-  Override overrideWith(DeleteRoutineUseCase Function() create) {
+  Override overrideWith(UpdateRoutineStateUseCase Function() create) {
     return ProviderOverride(
       origin: this,
-      override: DeleteRoutineUseCaseProvider._internal(
+      override: UpdateRoutineStateUseCaseProvider._internal(
         () => create()..routine = routine,
         from: from,
         name: null,
@@ -139,14 +140,15 @@ class DeleteRoutineUseCaseProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<DeleteRoutineUseCase, void>
+  AutoDisposeAsyncNotifierProviderElement<UpdateRoutineStateUseCase, void>
       createElement() {
-    return _DeleteRoutineUseCaseProviderElement(this);
+    return _UpdateRoutineStateUseCaseProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is DeleteRoutineUseCaseProvider && other.routine == routine;
+    return other is UpdateRoutineStateUseCaseProvider &&
+        other.routine == routine;
   }
 
   @override
@@ -158,18 +160,19 @@ class DeleteRoutineUseCaseProvider
   }
 }
 
-mixin DeleteRoutineUseCaseRef on AutoDisposeAsyncNotifierProviderRef<void> {
+mixin UpdateRoutineStateUseCaseRef
+    on AutoDisposeAsyncNotifierProviderRef<void> {
   /// The parameter `routine` of this provider.
   Routine get routine;
 }
 
-class _DeleteRoutineUseCaseProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<DeleteRoutineUseCase, void>
-    with DeleteRoutineUseCaseRef {
-  _DeleteRoutineUseCaseProviderElement(super.provider);
+class _UpdateRoutineStateUseCaseProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<UpdateRoutineStateUseCase,
+        void> with UpdateRoutineStateUseCaseRef {
+  _UpdateRoutineStateUseCaseProviderElement(super.provider);
 
   @override
-  Routine get routine => (origin as DeleteRoutineUseCaseProvider).routine;
+  Routine get routine => (origin as UpdateRoutineStateUseCaseProvider).routine;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

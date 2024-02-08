@@ -26,30 +26,24 @@ class RoutineFormValues with _$RoutineFormValues {
 }
 
 @riverpod
-class CurrentRoutineFormValuesNotifier
-    extends _$CurrentRoutineFormValuesNotifier {
+class AdditionalRoutineFormValuesNotifier
+    extends _$AdditionalRoutineFormValuesNotifier {
   @override
-  FutureOr<RoutineFormValues> build() {
+  RoutineFormValues build() {
     return const RoutineFormValues();
   }
 
   void updateNotificationTime(TimeOfDay value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(notificationTimeOfDay: value),
-    );
+    state = state.copyWith(notificationTimeOfDay: value);
   }
 
   // ignore: avoid_positional_boolean_parameters
   void updateEnableSound(bool value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(enableSound: value),
-    );
+    state = state.copyWith(enableSound: value);
   }
 
   // ignore: avoid_positional_boolean_parameters
   void updateEnablePush(bool value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(enablePush: value),
-    );
+    state = state.copyWith(enablePush: value);
   }
 }

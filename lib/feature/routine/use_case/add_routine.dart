@@ -20,7 +20,7 @@ class AddRoutineUseCase extends _$AddRoutineUseCase {
       final isar = ref.read(isarProvider);
       await isar.writeTxn(() async {
         final formValues =
-            ref.read(currentRoutineFormValuesNotifierProvider).requireValue;
+            ref.read(additionalRoutineFormValuesNotifierProvider);
         await isar.routines.put(formValues.toEntity());
       });
     });

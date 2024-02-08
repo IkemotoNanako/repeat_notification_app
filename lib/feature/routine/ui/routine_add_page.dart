@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../../core/ui/component/riverpod.dart';
 import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
 
@@ -52,30 +51,29 @@ class _NotificationTimeButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(currentRoutineFormValuesNotifierProvider);
-    return asyncValue.whenWidget(
-      data: (formValues) {
-        return TextButton(
-          onPressed: () async {
-            final time = await showTimePicker(
-              context: context,
-              initialTime: formValues.notificationTimeOfDay,
-            );
-            if (time != null) {
-              ref
-                  .read(currentRoutineFormValuesNotifierProvider.notifier)
-                  .updateNotificationTime(time);
-            }
-          },
-          child: Text(
-            formValues.notificationTimeOfDay.format(context),
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+    final notificationTimeOfDay = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.notificationTimeOfDay),
+    );
+    return TextButton(
+      onPressed: () async {
+        final time = await showTimePicker(
+          context: context,
+          initialTime: notificationTimeOfDay,
         );
+        if (time != null) {
+          ref
+              .read(additionalRoutineFormValuesNotifierProvider.notifier)
+              .updateNotificationTime(time);
+        }
       },
+      child: Text(
+        notificationTimeOfDay.format(context),
+        style: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
@@ -85,18 +83,17 @@ class _EnableSoundListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(currentRoutineFormValuesNotifierProvider);
-    return asyncValue.whenWidget(
-      data: (formValues) {
-        return SwitchListTile(
-          title: const Text('サウンド通知'),
-          value: formValues.enableSound,
-          onChanged: (value) {
-            ref
-                .read(currentRoutineFormValuesNotifierProvider.notifier)
-                .updateEnableSound(value);
-          },
-        );
+    final enableSound = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.enableSound),
+    );
+    return SwitchListTile(
+      title: const Text('サウンド通知'),
+      value: enableSound,
+      onChanged: (value) {
+        ref
+            .read(additionalRoutineFormValuesNotifierProvider.notifier)
+            .updateEnableSound(value);
       },
     );
   }
@@ -107,18 +104,17 @@ class _EnablePushListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(currentRoutineFormValuesNotifierProvider);
-    return asyncValue.whenWidget(
-      data: (formValues) {
-        return SwitchListTile(
-          title: const Text('プッシュ通知'),
-          value: formValues.enablePush,
-          onChanged: (value) {
-            ref
-                .read(currentRoutineFormValuesNotifierProvider.notifier)
-                .updateEnablePush(value);
-          },
-        );
+    final enablePush = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.enablePush),
+    );
+    return SwitchListTile(
+      title: const Text('プッシュ通知'),
+      value: enablePush,
+      onChanged: (value) {
+        ref
+            .read(additionalRoutineFormValuesNotifierProvider.notifier)
+            .updateEnablePush(value);
       },
     );
   }

@@ -8,9 +8,9 @@ part 'delete_routine.g.dart';
 @riverpod
 class DeleteRoutineUseCase extends _$DeleteRoutineUseCase {
   @override
-  FutureOr<void> build() => null;
+  FutureOr<void> build(Routine routine) => null;
 
-  Future<void> invoke(Routine routine) async {
+  Future<void> invoke() async {
     if (state.isLoading) {
       return;
     }

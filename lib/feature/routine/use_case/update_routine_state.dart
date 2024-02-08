@@ -3,17 +3,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/data/isar/isar.dart';
 import '../data/routine.dart';
 
-part 'update_routine.g.dart';
+part 'update_routine_state.g.dart';
 
 @riverpod
-class UpdateRoutineUseCase extends _$UpdateRoutineUseCase {
+class UpdateRoutineStateUseCase extends _$UpdateRoutineStateUseCase {
   @override
-  FutureOr<void> build() => null;
+  FutureOr<void> build(Routine routine) => null;
 
-  Future<void> invoke(
-    Routine routine, {
-    bool? newState,
-  }) async {
+  // ignore: avoid_positional_boolean_parameters
+  Future<void> invoke(bool value) async {
     if (state.isLoading) {
       return;
     }
@@ -21,9 +19,7 @@ class UpdateRoutineUseCase extends _$UpdateRoutineUseCase {
     state = await AsyncValue.guard(() async {
       final isar = ref.read(isarProvider);
       await isar.writeTxn(() async {
-        if (newState != null) {
-          routine.state = newState;
-        }
+        routine.state = value;
         await isar.routines.put(routine);
       });
     });

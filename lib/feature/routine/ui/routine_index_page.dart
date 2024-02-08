@@ -7,7 +7,7 @@ import '../../../core/ui/component/riverpod.dart';
 import '../data/routine.dart';
 import '../state/routine.dart';
 import '../use_case/delete_routine.dart';
-import '../use_case/update_routine.dart';
+import '../use_case/update_routine_state.dart';
 import 'component/navigate_routine_add_page.dart';
 
 class RoutineIndexPage extends StatelessWidget {
@@ -63,16 +63,17 @@ class _ListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listenAsync(updateRoutineUseCaseProvider);
-    ref.listenAsync(deleteRoutineUseCaseProvider);
+    final updateStateProvider = updateRoutineStateUseCaseProvider(routine);
+    final deleteProvider = deleteRoutineUseCaseProvider(routine);
+    ref.listenAsync(updateStateProvider);
+    ref.listenAsync(deleteProvider);
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         extentRatio: 0.2,
         children: [
           SlidableAction(
-            onPressed: (context) =>
-                ref.read(deleteRoutineUseCaseProvider.notifier).invoke(routine),
+            onPressed: (context) => ref.read(deleteProvider.notifier).invoke(),
             backgroundColor: context.error,
             foregroundColor: context.onError,
             label: '削除',
@@ -92,9 +93,8 @@ class _ListTile extends ConsumerWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         trailing: Switch(
           value: routine.state,
-          onChanged: (value) => ref
-              .read(updateRoutineUseCaseProvider.notifier)
-              .invoke(routine, newState: value),
+          onChanged: (value) =>
+              ref.read(updateStateProvider.notifier).invoke(value),
         ),
       ),
     );
