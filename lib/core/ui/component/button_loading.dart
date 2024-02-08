@@ -5,12 +5,10 @@ class ButtonLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: SizedBox.square(
-        dimension: 24,
-        child: CircularProgressIndicator(
-          strokeWidth: 3,
-        ),
+    return const SizedBox.square(
+      dimension: 24,
+      child: CircularProgressIndicator(
+        strokeWidth: 3,
       ),
     );
   }
