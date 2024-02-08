@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../core/ui/component/material.dart';
 import '../../../core/ui/component/riverpod.dart';
+import '../../../router/router.dart';
 import '../data/routine.dart';
 import '../state/routine.dart';
 import '../use_case/delete_routine.dart';
@@ -81,9 +82,7 @@ class _ListTile extends ConsumerWidget {
         ],
       ),
       child: ListTile(
-        onTap: () {
-          // TODO(susa): 編集画面に遷移する
-        },
+        onTap: () => RoutineUpdateRoute(routineId: routine.id).go(context),
         title: Text(
           routine.notificationTimeOfDay.format(context),
           style: context.displayMedium?.copyWith(
