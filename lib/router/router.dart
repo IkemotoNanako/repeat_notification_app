@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../feature/routine/state/current_routine.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
+import '../feature/routine/ui/routine_update_page.dart';
 
 part 'router.g.dart';
 
@@ -23,6 +26,9 @@ GoRouter appRouter(AppRouterRef ref) {
     TypedGoRoute<RoutineAddRoute>(
       path: 'add',
     ),
+    TypedGoRoute<RoutineUpdateRoute>(
+      path: ':routineId/update',
+    ),
   ],
 )
 class RoutineIndexRoute extends GoRouteData {
@@ -40,5 +46,23 @@ class RoutineAddRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const RoutineAddPage();
+  }
+}
+
+class RoutineUpdateRoute extends GoRouteData {
+  const RoutineUpdateRoute({
+    required this.routineId,
+  });
+
+  final int routineId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ProviderScope(
+      overrides: [
+        currentRoutineIdProvider.overrideWithValue(routineId),
+      ],
+      child: const RoutineUpdatePage(),
+    );
   }
 }

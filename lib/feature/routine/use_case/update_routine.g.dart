@@ -7,7 +7,7 @@ part of 'update_routine.dart';
 // **************************************************************************
 
 String _$updateRoutineUseCaseHash() =>
-    r'2a01162fcd05bebdda2e95886dccd7e11388bc71';
+    r'9044b10834393b7029c1938ef051a782e9687309';
 
 /// See also [UpdateRoutineUseCase].
 @ProviderFor(UpdateRoutineUseCase)
@@ -18,8 +18,16 @@ final updateRoutineUseCaseProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$updateRoutineUseCaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[
+    currentRoutineProvider,
+    updatedRoutineFormValuesNotifierProvider
+  ],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    currentRoutineProvider,
+    ...?currentRoutineProvider.allTransitiveDependencies,
+    updatedRoutineFormValuesNotifierProvider,
+    ...?updatedRoutineFormValuesNotifierProvider.allTransitiveDependencies
+  },
 );
 
 typedef _$UpdateRoutineUseCase = AutoDisposeAsyncNotifier<void>;

@@ -2,18 +2,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/data/isar/isar.dart';
 import '../data/routine.dart';
+import '../state/current_routine.dart';
+import '../state/routine_form_values.dart';
 
 part 'update_routine.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [currentRoutine, UpdatedRoutineFormValuesNotifier])
 class UpdateRoutineUseCase extends _$UpdateRoutineUseCase {
   @override
   FutureOr<void> build() => null;
 
-  Future<void> invoke(
-    Routine routine, {
-    bool? newState,
-  }) async {
+  Future<void> invoke() async {
     if (state.isLoading) {
       return;
     }
@@ -21,10 +20,13 @@ class UpdateRoutineUseCase extends _$UpdateRoutineUseCase {
     state = await AsyncValue.guard(() async {
       final isar = ref.read(isarProvider);
       await isar.writeTxn(() async {
-        if (newState != null) {
-          routine.state = newState;
+        final routine = await ref.read(currentRoutineProvider.future);
+        if (routine == null) {
+          throw StateError('Routine is not found');
         }
-        await isar.routines.put(routine);
+        final formValues =
+            ref.read(updatedRoutineFormValuesNotifierProvider).requireValue;
+        await isar.routines.put(formValues.toEntity(routine));
       });
     });
   }
