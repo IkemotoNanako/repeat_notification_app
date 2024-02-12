@@ -27,7 +27,7 @@ int currentRoutineId(CurrentRoutineIdRef ref) {
 }
 
 @Riverpod(dependencies: [currentRoutineParams])
-FutureOr<Routine?> currentRoutine(CurrentRoutineRef ref) async {
+Routine? currentRoutine(CurrentRoutineRef ref) {
   final params = ref.watch(currentRoutineParamsProvider);
   final cache = params.cache;
   if (cache != null) {
@@ -38,5 +38,5 @@ FutureOr<Routine?> currentRoutine(CurrentRoutineRef ref) async {
   // キャッシュがなければデータベースから取得して返す
   final id = params.routineId;
   final isar = ref.watch(isarProvider);
-  return isar.routines.get(id);
+  return isar.routines.getSync(id);
 }

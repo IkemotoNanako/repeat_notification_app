@@ -13,34 +13,27 @@ class DeleteCurrentRoutineButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(currentRoutineProvider);
-    return asyncValue.whenWidget(
-      data: (routine) {
-        if (routine == null) {
-          return const SizedBox();
-        }
+    final routine = ref.watch(currentRoutineProvider);
+    if (routine == null) {
+      return const SizedBox();
+    }
 
-        final deleteProvider = deleteRoutineUseCaseProvider(routine);
-
-        ref.listenAsync(
-          deleteProvider,
-          success: (_) => context.pop(),
-        );
-
-        final isLoading = ref.watch(deleteProvider).isLoading;
-        return TextButton(
-          onPressed: () => ref.read(deleteProvider.notifier).invoke(),
-          child: isLoading
-              ? const ButtonLoading()
-              : Text(
-                  'ルーティーンを削除',
-                  style: TextStyle(
-                    color: context.error,
-                  ),
-                ),
-        );
-      },
-      loading: SizedBox.new,
+    final deleteProvider = deleteRoutineUseCaseProvider(routine);
+    ref.listenAsync(
+      deleteProvider,
+      success: (_) => context.pop(),
+    );
+    final isLoading = ref.watch(deleteProvider).isLoading;
+    return TextButton(
+      onPressed: () => ref.read(deleteProvider.notifier).invoke(),
+      child: isLoading
+          ? const ButtonLoading()
+          : Text(
+              'ルーティーンを削除',
+              style: TextStyle(
+                color: context.error,
+              ),
+            ),
     );
   }
 }

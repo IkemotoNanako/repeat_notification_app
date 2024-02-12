@@ -41,11 +41,11 @@ final currentRoutineIdProvider = AutoDisposeProvider<int>.internal(
 );
 
 typedef CurrentRoutineIdRef = AutoDisposeProviderRef<int>;
-String _$currentRoutineHash() => r'8cea908a5ebe6b3ca2110d2cc0106741bd63bf2d';
+String _$currentRoutineHash() => r'f6b1477653f1d9a5bdce02f4f5343c3387e63d55';
 
 /// See also [currentRoutine].
 @ProviderFor(currentRoutine)
-final currentRoutineProvider = AutoDisposeFutureProvider<Routine?>.internal(
+final currentRoutineProvider = AutoDisposeProvider<Routine?>.internal(
   currentRoutine,
   name: r'currentRoutineProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -58,6 +58,6 @@ final currentRoutineProvider = AutoDisposeFutureProvider<Routine?>.internal(
   },
 );
 
-typedef CurrentRoutineRef = AutoDisposeFutureProviderRef<Routine?>;
+typedef CurrentRoutineRef = AutoDisposeProviderRef<Routine?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

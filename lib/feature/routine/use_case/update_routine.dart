@@ -20,12 +20,11 @@ class UpdateRoutineUseCase extends _$UpdateRoutineUseCase {
     state = await AsyncValue.guard(() async {
       final isar = ref.read(isarProvider);
       await isar.writeTxn(() async {
-        final routine = await ref.read(currentRoutineProvider.future);
+        final routine = ref.read(currentRoutineProvider);
         if (routine == null) {
           throw StateError('Routine is not found');
         }
-        final formValues =
-            ref.read(updatedRoutineFormValuesNotifierProvider).requireValue;
+        final formValues = ref.read(updatedRoutineFormValuesNotifierProvider);
         await isar.routines.put(formValues.toEntity(routine));
       });
     });

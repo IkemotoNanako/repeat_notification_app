@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import '../../../core/ui/component/riverpod.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
 import 'component/update_routine.dart';
@@ -56,34 +55,30 @@ class _NotificationTimeButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(
+    final notificationTimeOfDay = ref.watch(
       updatedRoutineFormValuesNotifierProvider.select(
-        (value) => value.whenData((value) => value.notificationTimeOfDay),
+        (value) => value.notificationTimeOfDay,
       ),
     );
-    return asyncValue.whenWidget(
-      data: (notificationTimeOfDay) {
-        return TextButton(
-          onPressed: () async {
-            final time = await showTimePicker(
-              context: context,
-              initialTime: notificationTimeOfDay,
-            );
-            if (time != null) {
-              ref
-                  .read(updatedRoutineFormValuesNotifierProvider.notifier)
-                  .updateNotificationTime(time);
-            }
-          },
-          child: Text(
-            notificationTimeOfDay.format(context),
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+    return TextButton(
+      onPressed: () async {
+        final time = await showTimePicker(
+          context: context,
+          initialTime: notificationTimeOfDay,
         );
+        if (time != null) {
+          ref
+              .read(updatedRoutineFormValuesNotifierProvider.notifier)
+              .updateNotificationTime(time);
+        }
       },
+      child: Text(
+        notificationTimeOfDay.format(context),
+        style: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
@@ -93,22 +88,18 @@ class _EnableSoundListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(
+    final enableSound = ref.watch(
       updatedRoutineFormValuesNotifierProvider.select(
-        (value) => value.whenData((value) => value.enableSound),
+        (value) => value.enableSound,
       ),
     );
-    return asyncValue.whenWidget(
-      data: (enableSound) {
-        return SwitchListTile(
-          title: const Text('サウンド通知'),
-          value: enableSound,
-          onChanged: (value) {
-            ref
-                .read(updatedRoutineFormValuesNotifierProvider.notifier)
-                .updateEnableSound(value);
-          },
-        );
+    return SwitchListTile(
+      title: const Text('サウンド通知'),
+      value: enableSound,
+      onChanged: (value) {
+        ref
+            .read(updatedRoutineFormValuesNotifierProvider.notifier)
+            .updateEnableSound(value);
       },
     );
   }
@@ -119,22 +110,17 @@ class _EnablePushListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncValue = ref.watch(
-      updatedRoutineFormValuesNotifierProvider.select(
-        (value) => value.whenData((value) => value.enablePush),
-      ),
+    final enablePush = ref.watch(
+      updatedRoutineFormValuesNotifierProvider
+          .select((value) => value.enablePush),
     );
-    return asyncValue.whenWidget(
-      data: (enablePush) {
-        return SwitchListTile(
-          title: const Text('プッシュ通知'),
-          value: enablePush,
-          onChanged: (value) {
-            ref
-                .read(updatedRoutineFormValuesNotifierProvider.notifier)
-                .updateEnablePush(value);
-          },
-        );
+    return SwitchListTile(
+      title: const Text('プッシュ通知'),
+      value: enablePush,
+      onChanged: (value) {
+        ref
+            .read(updatedRoutineFormValuesNotifierProvider.notifier)
+            .updateEnablePush(value);
       },
     );
   }
