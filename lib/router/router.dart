@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../feature/routine/data/routine.dart';
 import '../feature/routine/state/current_routine.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
@@ -52,15 +53,24 @@ class RoutineAddRoute extends GoRouteData {
 class RoutineUpdateRoute extends GoRouteData {
   const RoutineUpdateRoute({
     required this.routineId,
+    this.$extra,
   });
 
+  factory RoutineUpdateRoute.fromRoutine(Routine routine) => RoutineUpdateRoute(
+        routineId: routine.id,
+        $extra: routine,
+      );
+
   final int routineId;
+  final Routine? $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return ProviderScope(
       overrides: [
-        currentRoutineIdProvider.overrideWithValue(routineId),
+        currentRoutineParamsProvider.overrideWithValue(
+          RoutineParams(routineId: routineId, cache: $extra),
+        ),
       ],
       child: const RoutineUpdatePage(),
     );
