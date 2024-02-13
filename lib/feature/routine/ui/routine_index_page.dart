@@ -82,7 +82,7 @@ class _ListTile extends ConsumerWidget {
         ],
       ),
       child: ListTile(
-        onTap: () => RoutineUpdateRoute(routineId: routine.id).go(context),
+        onTap: () => RoutineUpdateRoute.fromRoutine(routine).go(context),
         title: Text(
           routine.notificationTimeOfDay.format(context),
           style: context.displayMedium?.copyWith(

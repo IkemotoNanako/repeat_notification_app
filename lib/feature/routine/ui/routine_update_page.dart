@@ -56,8 +56,9 @@ class _NotificationTimeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notificationTimeOfDay = ref.watch(
-      updatedRoutineFormValuesNotifierProvider
-          .select((value) => value.requireValue.notificationTimeOfDay),
+      updatedRoutineFormValuesNotifierProvider.select(
+        (value) => value.notificationTimeOfDay,
+      ),
     );
     return TextButton(
       onPressed: () async {
@@ -88,8 +89,9 @@ class _EnableSoundListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final enableSound = ref.watch(
-      updatedRoutineFormValuesNotifierProvider
-          .select((value) => value.requireValue.enableSound),
+      updatedRoutineFormValuesNotifierProvider.select(
+        (value) => value.enableSound,
+      ),
     );
     return SwitchListTile(
       title: const Text('サウンド通知'),
@@ -110,7 +112,7 @@ class _EnablePushListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final enablePush = ref.watch(
       updatedRoutineFormValuesNotifierProvider
-          .select((value) => value.requireValue.enablePush),
+          .select((value) => value.enablePush),
     );
     return SwitchListTile(
       title: const Text('プッシュ通知'),

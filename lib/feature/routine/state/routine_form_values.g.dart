@@ -7,7 +7,7 @@ part of 'routine_form_values.dart';
 // **************************************************************************
 
 String _$additionalRoutineFormValuesNotifierHash() =>
-    r'7f5e078da4e3faf30b8ab26fb3f70afff8729761';
+    r'e3d99c6e32d1791d37028fc88bb67403f052935e';
 
 /// See also [AdditionalRoutineFormValuesNotifier].
 @ProviderFor(AdditionalRoutineFormValuesNotifier)
@@ -25,13 +25,12 @@ final additionalRoutineFormValuesNotifierProvider = AutoDisposeNotifierProvider<
 typedef _$AdditionalRoutineFormValuesNotifier
     = AutoDisposeNotifier<RoutineFormValues>;
 String _$updatedRoutineFormValuesNotifierHash() =>
-    r'1401fa38caa9f0560eb44384f22528234cf23afe';
+    r'e09de582ee283a166ecd0349ea2ad78e9e49ae85';
 
 /// See also [UpdatedRoutineFormValuesNotifier].
 @ProviderFor(UpdatedRoutineFormValuesNotifier)
-final updatedRoutineFormValuesNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<UpdatedRoutineFormValuesNotifier,
-        RoutineFormValues>.internal(
+final updatedRoutineFormValuesNotifierProvider = AutoDisposeNotifierProvider<
+    UpdatedRoutineFormValuesNotifier, RoutineFormValues>.internal(
   UpdatedRoutineFormValuesNotifier.new,
   name: r'updatedRoutineFormValuesNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -45,6 +44,6 @@ final updatedRoutineFormValuesNotifierProvider =
 );
 
 typedef _$UpdatedRoutineFormValuesNotifier
-    = AutoDisposeAsyncNotifier<RoutineFormValues>;
+    = AutoDisposeNotifier<RoutineFormValues>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

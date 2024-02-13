@@ -35,12 +35,28 @@ class RoutineFormValues with _$RoutineFormValues {
 
 @riverpod
 class AdditionalRoutineFormValuesNotifier
-    extends _$AdditionalRoutineFormValuesNotifier {
+    extends _$AdditionalRoutineFormValuesNotifier
+    with _RoutineFormValuesNotifier {
   @override
   RoutineFormValues build() {
     return const RoutineFormValues();
   }
+}
 
+@Riverpod(dependencies: [currentRoutine])
+class UpdatedRoutineFormValuesNotifier
+    extends _$UpdatedRoutineFormValuesNotifier with _RoutineFormValuesNotifier {
+  @override
+  RoutineFormValues build() {
+    final routine = ref.watch(currentRoutineProvider);
+    if (routine == null) {
+      throw StateError('Routine is not found');
+    }
+    return RoutineFormValues.fromEntity(routine);
+  }
+}
+
+mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
   void updateNotificationTime(TimeOfDay value) {
     state = state.copyWith(notificationTimeOfDay: value);
   }
@@ -53,38 +69,5 @@ class AdditionalRoutineFormValuesNotifier
   // ignore: avoid_positional_boolean_parameters
   void updateEnablePush(bool value) {
     state = state.copyWith(enablePush: value);
-  }
-}
-
-@Riverpod(dependencies: [currentRoutine])
-class UpdatedRoutineFormValuesNotifier
-    extends _$UpdatedRoutineFormValuesNotifier {
-  @override
-  FutureOr<RoutineFormValues> build() async {
-    final routine = await ref.watch(currentRoutineProvider.future);
-    if (routine == null) {
-      throw StateError('Routine is not found');
-    }
-    return RoutineFormValues.fromEntity(routine);
-  }
-
-  void updateNotificationTime(TimeOfDay value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(notificationTimeOfDay: value),
-    );
-  }
-
-  // ignore: avoid_positional_boolean_parameters
-  void updateEnableSound(bool value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(enableSound: value),
-    );
-  }
-
-  // ignore: avoid_positional_boolean_parameters
-  void updateEnablePush(bool value) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(enablePush: value),
-    );
   }
 }

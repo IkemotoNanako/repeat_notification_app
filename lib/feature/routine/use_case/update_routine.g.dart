@@ -7,7 +7,7 @@ part of 'update_routine.dart';
 // **************************************************************************
 
 String _$updateRoutineUseCaseHash() =>
-    r'9044b10834393b7029c1938ef051a782e9687309';
+    r'26ce1c04d8d2578094e9819fe2bf06922fdd755b';
 
 /// See also [UpdateRoutineUseCase].
 @ProviderFor(UpdateRoutineUseCase)

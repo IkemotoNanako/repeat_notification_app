@@ -65,20 +65,23 @@ extension $RoutineUpdateRouteExtension on RoutineUpdateRoute {
   static RoutineUpdateRoute _fromState(GoRouterState state) =>
       RoutineUpdateRoute(
         routineId: int.parse(state.pathParameters['routineId']!),
+        $extra: state.extra as Routine?,
       );
 
   String get location => GoRouteData.$location(
         '/routine/${Uri.encodeComponent(routineId.toString())}/update',
       );
 
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: $extra);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: $extra);
 
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 // **************************************************************************
