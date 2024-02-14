@@ -14,6 +14,43 @@ extension RoutineX on Routine {
       );
 }
 
+extension RepetitionWeekX on RepetitionWeek {
+  String get label => switch (this) {
+        RepetitionWeek.monday => '毎月曜日',
+        RepetitionWeek.tuesday => '毎火曜日',
+        RepetitionWeek.wednesday => '毎水曜日',
+        RepetitionWeek.thursday => '毎木曜日',
+        RepetitionWeek.friday => '毎金曜日',
+        RepetitionWeek.saturday => '毎土曜日',
+        RepetitionWeek.sunday => '毎日曜日',
+      };
+
+  String get shortLabel => switch (this) {
+        RepetitionWeek.monday => '月',
+        RepetitionWeek.tuesday => '火',
+        RepetitionWeek.wednesday => '水',
+        RepetitionWeek.thursday => '木',
+        RepetitionWeek.friday => '金',
+        RepetitionWeek.saturday => '土',
+        RepetitionWeek.sunday => '日',
+      };
+}
+
+extension RepetitionWeeksX on List<RepetitionWeek> {
+  String get title {
+    if (isEmpty) {
+      return 'しない';
+    }
+    if (length == RepetitionWeek.values.length) {
+      return '毎日';
+    }
+    if (length == 1) {
+      return first.label;
+    }
+    return map((e) => e.shortLabel).join(' ');
+  }
+}
+
 @riverpod
 Stream<List<Routine>> routines(RoutinesRef ref) {
   final isar = ref.watch(isarProvider);

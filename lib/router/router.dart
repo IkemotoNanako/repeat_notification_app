@@ -7,6 +7,7 @@ import '../feature/routine/data/routine.dart';
 import '../feature/routine/state/current_routine.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
+import '../feature/routine/ui/routine_repetition_add_page.dart';
 import '../feature/routine/ui/routine_update_page.dart';
 
 part 'router.g.dart';
@@ -26,6 +27,11 @@ GoRouter appRouter(AppRouterRef ref) {
   routes: [
     TypedGoRoute<RoutineAddRoute>(
       path: 'add',
+      routes: [
+        TypedGoRoute<RoutineRepetitionAddRoute>(
+          path: 'repetition',
+        ),
+      ],
     ),
     TypedGoRoute<RoutineUpdateRoute>(
       path: ':routineId/update',
@@ -47,6 +53,15 @@ class RoutineAddRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const RoutineAddPage();
+  }
+}
+
+class RoutineRepetitionAddRoute extends GoRouteData {
+  const RoutineRepetitionAddRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const RoutineRepetitionAddPage();
   }
 }
 

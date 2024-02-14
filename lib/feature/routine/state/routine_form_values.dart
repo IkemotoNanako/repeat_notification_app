@@ -14,6 +14,7 @@ part 'routine_form_values.g.dart';
 class RoutineFormValues with _$RoutineFormValues {
   const factory RoutineFormValues({
     @Default(TimeOfDay(hour: 7, minute: 0)) TimeOfDay notificationTimeOfDay,
+    @Default(<RepetitionWeek>[]) List<RepetitionWeek> repetitionWeeks,
     @Default(true) bool enableSound,
     @Default(true) bool enablePush,
   }) = _RoutineFormValues;
@@ -21,6 +22,7 @@ class RoutineFormValues with _$RoutineFormValues {
 
   factory RoutineFormValues.fromEntity(Routine entity) => RoutineFormValues(
         notificationTimeOfDay: entity.notificationTimeOfDay,
+        repetitionWeeks: entity.repetitionWeeks,
         enableSound: entity.enableSound,
         enablePush: entity.enablePush,
       );
@@ -29,6 +31,7 @@ class RoutineFormValues with _$RoutineFormValues {
   Routine toEntity([Routine? base]) => (base ?? Routine())
     ..notificationTime =
         notificationTimeOfDay.hour * 3600 + notificationTimeOfDay.minute * 60
+    ..repetitionWeeks = repetitionWeeks
     ..enableSound = enableSound
     ..enablePush = enablePush;
 }
@@ -59,6 +62,26 @@ class UpdatedRoutineFormValuesNotifier
 mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
   void updateNotificationTime(TimeOfDay value) {
     state = state.copyWith(notificationTimeOfDay: value);
+  }
+
+  void addRepetitionWeek(RepetitionWeek value) {
+    if (state.repetitionWeeks.contains(value)) {
+      return;
+    }
+    state = state.copyWith(
+      repetitionWeeks: List<RepetitionWeek>.from(state.repetitionWeeks)
+        ..add(value),
+    );
+  }
+
+  void deleteRepetitionWeek(RepetitionWeek value) {
+    if (!state.repetitionWeeks.contains(value)) {
+      return;
+    }
+    state = state.copyWith(
+      repetitionWeeks: List<RepetitionWeek>.from(state.repetitionWeeks)
+        ..remove(value),
+    );
   }
 
   // ignore: avoid_positional_boolean_parameters

@@ -89,6 +89,7 @@ class _ListTile extends ConsumerWidget {
             color: routine.state ? null : context.outline,
           ),
         ),
+        subtitle: Text('繰り返し：${routine.repetitionWeeks.title}'),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         trailing: Switch(
           value: routine.state,

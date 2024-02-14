@@ -12,6 +12,10 @@ class Routine {
   @Index()
   int notificationTime = 0;
 
+  /// 繰り返す曜日
+  @Enumerated(EnumType.name)
+  List<RepetitionWeek> repetitionWeeks = [];
+
   /// サウンド通知の有無
   bool enableSound = true;
 
@@ -26,4 +30,15 @@ class Routine {
 
   /// 有効フラグ
   bool state = true;
+}
+
+enum RepetitionWeek {
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday,
+  ;
 }
