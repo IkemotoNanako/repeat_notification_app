@@ -8,6 +8,7 @@ import '../feature/routine/state/current_routine.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
 import '../feature/routine/ui/routine_repetition_add_page.dart';
+import '../feature/routine/ui/routine_repetition_update_page.dart';
 import '../feature/routine/ui/routine_update_page.dart';
 
 part 'router.g.dart';
@@ -35,6 +36,11 @@ GoRouter appRouter(AppRouterRef ref) {
     ),
     TypedGoRoute<RoutineUpdateRoute>(
       path: ':routineId/update',
+      routes: [
+        TypedGoRoute<RoutineRepetitionUpdateRoute>(
+          path: 'repetition',
+        ),
+      ],
     ),
   ],
 )
@@ -88,6 +94,34 @@ class RoutineUpdateRoute extends GoRouteData {
         ),
       ],
       child: const RoutineUpdatePage(),
+    );
+  }
+}
+
+class RoutineRepetitionUpdateRoute extends GoRouteData {
+  const RoutineRepetitionUpdateRoute({
+    required this.routineId,
+    this.$extra,
+  });
+
+  factory RoutineRepetitionUpdateRoute.fromRoutine(Routine routine) =>
+      RoutineRepetitionUpdateRoute(
+        routineId: routine.id,
+        $extra: routine,
+      );
+
+  final int routineId;
+  final Routine? $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ProviderScope(
+      overrides: [
+        currentRoutineParamsProvider.overrideWithValue(
+          RoutineParams(routineId: routineId, cache: $extra),
+        ),
+      ],
+      child: const RoutineRepetitionUpdatePage(),
     );
   }
 }

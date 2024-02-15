@@ -27,6 +27,12 @@ RouteBase get $routineIndexRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: ':routineId/update',
           factory: $RoutineUpdateRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'repetition',
+              factory: $RoutineRepetitionUpdateRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -94,6 +100,30 @@ extension $RoutineUpdateRouteExtension on RoutineUpdateRoute {
 
   String get location => GoRouteData.$location(
         '/routine/${Uri.encodeComponent(routineId.toString())}/update',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $RoutineRepetitionUpdateRouteExtension
+    on RoutineRepetitionUpdateRoute {
+  static RoutineRepetitionUpdateRoute _fromState(GoRouterState state) =>
+      RoutineRepetitionUpdateRoute(
+        routineId: int.parse(state.pathParameters['routineId']!),
+        $extra: state.extra as Routine?,
+      );
+
+  String get location => GoRouteData.$location(
+        '/routine/${Uri.encodeComponent(routineId.toString())}/update/repetition',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
