@@ -64,24 +64,9 @@ mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
     state = state.copyWith(notificationTimeOfDay: value);
   }
 
-  void addRepetitionWeek(RepetitionWeek value) {
-    if (state.repetitionWeeks.contains(value)) {
-      return;
-    }
-    state = state.copyWith(
-      repetitionWeeks: List<RepetitionWeek>.from(state.repetitionWeeks)
-        ..add(value),
-    );
-  }
-
-  void deleteRepetitionWeek(RepetitionWeek value) {
-    if (!state.repetitionWeeks.contains(value)) {
-      return;
-    }
-    state = state.copyWith(
-      repetitionWeeks: List<RepetitionWeek>.from(state.repetitionWeeks)
-        ..remove(value),
-    );
+  void updateRepetitionWeeks(List<RepetitionWeek> value) {
+    value.sort((a, b) => a.index.compareTo(b.index));
+    state = state.copyWith(repetitionWeeks: value);
   }
 
   // ignore: avoid_positional_boolean_parameters

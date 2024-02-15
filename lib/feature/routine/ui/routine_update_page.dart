@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/ui/component/material.dart';
-import '../../../router/router.dart';
-import '../state/current_routine.dart';
+import '../data/routine.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
 import 'component/update_routine.dart';
+import 'routine_repetition_select_page.dart';
 
 class RoutineUpdatePage extends StatelessWidget {
   const RoutineUpdatePage({super.key});
@@ -93,14 +93,25 @@ class _RepetitionListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final routine = ref.watch(currentRoutineProvider);
     final repetitionWeeks = ref.watch(
       updatedRoutineFormValuesNotifierProvider
           .select((value) => value.repetitionWeeks),
     );
     return ListTile(
-      onTap: () =>
-          RoutineRepetitionUpdateRoute.fromRoutine(routine!).go(context),
+      onTap: () async {
+        final selectedRepetitionWeeks = await Navigator.of(context).push(
+          MaterialPageRoute<List<RepetitionWeek>>(
+            builder: (context) => RoutineRepetitionSelectPage(
+              initialRepetitionWeeks: repetitionWeeks,
+            ),
+          ),
+        );
+        if (selectedRepetitionWeeks != null) {
+          ref
+              .read(updatedRoutineFormValuesNotifierProvider.notifier)
+              .updateRepetitionWeeks(selectedRepetitionWeeks);
+        }
+      },
       title: Row(
         children: [
           const Expanded(
