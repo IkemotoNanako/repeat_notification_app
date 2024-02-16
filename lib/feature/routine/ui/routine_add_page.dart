@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -9,6 +10,7 @@ import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
 import 'routine_repetition_select_page.dart';
 
+@RoutePage()
 class RoutineAddPage extends StatelessWidget {
   const RoutineAddPage({super.key});
 

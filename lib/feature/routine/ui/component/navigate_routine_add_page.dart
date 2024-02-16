@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../router/router.dart';
@@ -8,7 +9,7 @@ class NavigateRoutineAddPageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => const RoutineAddRoute().go(context),
+      onPressed: () => context.navigateTo(const RoutineAddRoute()),
       icon: const Icon(Icons.add),
       tooltip: 'ルーティン登録',
     );

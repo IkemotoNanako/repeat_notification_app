@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/ui/component/button_loading.dart';
 import '../../../../core/ui/component/riverpod.dart';
@@ -13,7 +13,7 @@ class UpdateRoutineButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listenAsync(
       updateRoutineUseCaseProvider,
-      success: (_) => context.pop(),
+      success: (_) => context.popRoute(),
     );
     final isLoading = ref.watch(updateRoutineUseCaseProvider).isLoading;
     return TextButton(

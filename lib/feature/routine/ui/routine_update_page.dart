@@ -1,17 +1,43 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/ui/component/material.dart';
 import '../data/routine.dart';
+import '../state/current_routine.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
 import 'component/update_routine.dart';
 import 'routine_repetition_select_page.dart';
 
+@RoutePage()
 class RoutineUpdatePage extends StatelessWidget {
-  const RoutineUpdatePage({super.key});
+  const RoutineUpdatePage({
+    super.key,
+    @PathParam() required this.routineId,
+    this.cache,
+  });
+
+  final int routineId;
+  final Routine? cache;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        currentRoutineParamsProvider.overrideWithValue(
+          RoutineParams(routineId: routineId, cache: cache),
+        ),
+      ],
+      child: const _Page(),
+    );
+  }
+}
+
+class _Page extends StatelessWidget {
+  const _Page();
 
   @override
   Widget build(BuildContext context) {
