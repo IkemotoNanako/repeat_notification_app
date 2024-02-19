@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+import '../../../core/ui/component/material.dart';
+import '../data/routine.dart';
+import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
+import 'routine_repetition_select_page.dart';
 
 class RoutineAddPage extends StatelessWidget {
   const RoutineAddPage({super.key});
@@ -38,6 +42,7 @@ class _Body extends StatelessWidget {
             child: _NotificationTimeButton(),
           ),
           Gap(32),
+          _RepetitionListTile(),
           _EnableSoundListTile(),
           _EnablePushListTile(),
         ],
@@ -74,6 +79,48 @@ class _NotificationTimeButton extends ConsumerWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
+    );
+  }
+}
+
+class _RepetitionListTile extends ConsumerWidget {
+  const _RepetitionListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final repetitionWeeks = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.repetitionWeeks),
+    );
+    return ListTile(
+      onTap: () async {
+        final selectedRepetitionWeeks = await Navigator.of(context).push(
+          MaterialPageRoute<List<RepetitionWeek>>(
+            builder: (context) => RoutineRepetitionSelectPage(
+              initialRepetitionWeeks: repetitionWeeks,
+            ),
+          ),
+        );
+        if (selectedRepetitionWeeks != null) {
+          ref
+              .read(additionalRoutineFormValuesNotifierProvider.notifier)
+              .updateRepetitionWeeks(selectedRepetitionWeeks);
+        }
+      },
+      title: Row(
+        children: [
+          const Expanded(
+            child: Text('繰り返し'),
+          ),
+          Text(
+            repetitionWeeks.title,
+            style: TextStyle(
+              color: context.outline,
+            ),
+          ),
+        ],
+      ),
+      trailing: const Icon(Icons.navigate_next),
     );
   }
 }

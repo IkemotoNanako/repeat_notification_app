@@ -37,13 +37,19 @@ const RoutineSchema = CollectionSchema(
       name: r'notificationTime',
       type: IsarType.long,
     ),
-    r'state': PropertySchema(
+    r'repetitionWeeks': PropertySchema(
       id: 4,
+      name: r'repetitionWeeks',
+      type: IsarType.stringList,
+      enumMap: _RoutinerepetitionWeeksEnumValueMap,
+    ),
+    r'state': PropertySchema(
+      id: 5,
       name: r'state',
       type: IsarType.bool,
     ),
     r'updatedAt': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'updatedAt',
       type: IsarType.dateTime,
     )
@@ -82,6 +88,13 @@ int _routineEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.repetitionWeeks.length * 3;
+  {
+    for (var i = 0; i < object.repetitionWeeks.length; i++) {
+      final value = object.repetitionWeeks[i];
+      bytesCount += value.name.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -95,8 +108,10 @@ void _routineSerialize(
   writer.writeBool(offsets[1], object.enablePush);
   writer.writeBool(offsets[2], object.enableSound);
   writer.writeLong(offsets[3], object.notificationTime);
-  writer.writeBool(offsets[4], object.state);
-  writer.writeDateTime(offsets[5], object.updatedAt);
+  writer.writeStringList(
+      offsets[4], object.repetitionWeeks.map((e) => e.name).toList());
+  writer.writeBool(offsets[5], object.state);
+  writer.writeDateTime(offsets[6], object.updatedAt);
 }
 
 Routine _routineDeserialize(
@@ -111,8 +126,14 @@ Routine _routineDeserialize(
   object.enableSound = reader.readBool(offsets[2]);
   object.id = id;
   object.notificationTime = reader.readLong(offsets[3]);
-  object.state = reader.readBool(offsets[4]);
-  object.updatedAt = reader.readDateTime(offsets[5]);
+  object.repetitionWeeks = reader
+          .readStringList(offsets[4])
+          ?.map((e) =>
+              _RoutinerepetitionWeeksValueEnumMap[e] ?? RepetitionWeek.monday)
+          .toList() ??
+      [];
+  object.state = reader.readBool(offsets[5]);
+  object.updatedAt = reader.readDateTime(offsets[6]);
   return object;
 }
 
@@ -132,13 +153,40 @@ P _routineDeserializeProp<P>(
     case 3:
       return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readBool(offset)) as P;
+      return (reader
+              .readStringList(offset)
+              ?.map((e) =>
+                  _RoutinerepetitionWeeksValueEnumMap[e] ??
+                  RepetitionWeek.monday)
+              .toList() ??
+          []) as P;
     case 5:
+      return (reader.readBool(offset)) as P;
+    case 6:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _RoutinerepetitionWeeksEnumValueMap = {
+  r'monday': r'monday',
+  r'tuesday': r'tuesday',
+  r'wednesday': r'wednesday',
+  r'thursday': r'thursday',
+  r'friday': r'friday',
+  r'saturday': r'saturday',
+  r'sunday': r'sunday',
+};
+const _RoutinerepetitionWeeksValueEnumMap = {
+  r'monday': RepetitionWeek.monday,
+  r'tuesday': RepetitionWeek.tuesday,
+  r'wednesday': RepetitionWeek.wednesday,
+  r'thursday': RepetitionWeek.thursday,
+  r'friday': RepetitionWeek.friday,
+  r'saturday': RepetitionWeek.saturday,
+  r'sunday': RepetitionWeek.sunday,
+};
 
 Id _routineGetId(Routine object) {
   return object.id;
@@ -507,6 +555,233 @@ extension RoutineQueryFilter
     });
   }
 
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementEqualTo(
+    RepetitionWeek value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementGreaterThan(
+    RepetitionWeek value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementLessThan(
+    RepetitionWeek value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementBetween(
+    RepetitionWeek lower,
+    RepetitionWeek upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'repetitionWeeks',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementContains(String value,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'repetitionWeeks',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementMatches(String pattern,
+          {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'repetitionWeeks',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'repetitionWeeks',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'repetitionWeeks',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition>
+      repetitionWeeksLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'repetitionWeeks',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<Routine, Routine, QAfterFilterCondition> stateEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -764,6 +1039,12 @@ extension RoutineQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Routine, Routine, QDistinct> distinctByRepetitionWeeks() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'repetitionWeeks');
+    });
+  }
+
   QueryBuilder<Routine, Routine, QDistinct> distinctByState() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'state');
@@ -806,6 +1087,13 @@ extension RoutineQueryProperty
   QueryBuilder<Routine, int, QQueryOperations> notificationTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notificationTime');
+    });
+  }
+
+  QueryBuilder<Routine, List<RepetitionWeek>, QQueryOperations>
+      repetitionWeeksProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'repetitionWeeks');
     });
   }
 
