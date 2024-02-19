@@ -4,45 +4,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/ui/component/material.dart';
-import '../data/routine.dart';
-import '../state/current_routine.dart';
+import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
 import 'component/update_routine.dart';
-import 'routine_repetition_select_page.dart';
 
 @RoutePage()
 class RoutineUpdatePage extends StatelessWidget {
   const RoutineUpdatePage({
     super.key,
-    @PathParam() required this.routineId,
-    this.cache,
+    // ignore: avoid_unused_constructor_parameters
+    @PathParam.inherit() required int routineId,
   });
-
-  final int routineId;
-  final Routine? cache;
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        currentRoutineParamsProvider.overrideWithValue(
-          RoutineParams(routineId: routineId, cache: cache),
-        ),
-      ],
-      child: const _Page(),
-    );
-  }
-}
-
-class _Page extends StatelessWidget {
-  const _Page();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const AutoLeadingButton(),
         title: const Text('ルーティン編集'),
         actions: const [
           UpdateRoutineButton(),
@@ -92,17 +72,7 @@ class _NotificationTimeButton extends ConsumerWidget {
       ),
     );
     return TextButton(
-      onPressed: () async {
-        final time = await showTimePicker(
-          context: context,
-          initialTime: notificationTimeOfDay,
-        );
-        if (time != null) {
-          ref
-              .read(updatedRoutineFormValuesNotifierProvider.notifier)
-              .updateNotificationTime(time);
-        }
-      },
+      onPressed: () => context.navigateTo(RepetitionUpdateRoute()),
       child: Text(
         notificationTimeOfDay.format(context),
         style: const TextStyle(
@@ -124,20 +94,7 @@ class _RepetitionListTile extends ConsumerWidget {
           .select((value) => value.repetitionWeeks),
     );
     return ListTile(
-      onTap: () async {
-        final selectedRepetitionWeeks = await Navigator.of(context).push(
-          MaterialPageRoute<List<RepetitionWeek>>(
-            builder: (context) => RoutineRepetitionSelectPage(
-              initialRepetitionWeeks: repetitionWeeks,
-            ),
-          ),
-        );
-        if (selectedRepetitionWeeks != null) {
-          ref
-              .read(updatedRoutineFormValuesNotifierProvider.notifier)
-              .updateRepetitionWeeks(selectedRepetitionWeeks);
-        }
-      },
+      onTap: () => context.navigateTo(RepetitionUpdateRoute()),
       title: Row(
         children: [
           const Expanded(

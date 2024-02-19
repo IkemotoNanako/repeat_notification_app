@@ -85,7 +85,7 @@ class _ListTile extends ConsumerWidget {
       ),
       child: ListTile(
         onTap: () => context.navigateTo(
-          RoutineUpdateRoute(routineId: routine.id, cache: routine),
+          CurrentRoutineRouterRoute(routineId: routine.id, cache: routine),
         ),
         title: Text(
           routine.notificationTimeOfDay.format(context),

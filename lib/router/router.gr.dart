@@ -15,6 +15,38 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CurrentRoutineRouterRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<CurrentRoutineRouterRouteArgs>(
+          orElse: () => CurrentRoutineRouterRouteArgs(
+              routineId: pathParams.getInt('routineId')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CurrentRoutineRouterPage(
+          key: args.key,
+          routineId: args.routineId,
+          cache: args.cache,
+        ),
+      );
+    },
+    RepetitionAddRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RepetitionAddPage(),
+      );
+    },
+    RepetitionUpdateRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<RepetitionUpdateRouteArgs>(
+          orElse: () => RepetitionUpdateRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RepetitionUpdatePage(
+          key: args.key,
+          routineId: pathParams.getInt('routineId'),
+        ),
+      );
+    },
     RootRouterRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -42,18 +74,104 @@ abstract class _$AppRouter extends RootStackRouter {
     RoutineUpdateRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<RoutineUpdateRouteArgs>(
-          orElse: () => RoutineUpdateRouteArgs(
-              routineId: pathParams.getInt('routineId')));
+          orElse: () => RoutineUpdateRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: RoutineUpdatePage(
           key: args.key,
-          routineId: args.routineId,
-          cache: args.cache,
+          routineId: pathParams.getInt('routineId'),
         ),
       );
     },
   };
+}
+
+/// generated route for
+/// [CurrentRoutineRouterPage]
+class CurrentRoutineRouterRoute
+    extends PageRouteInfo<CurrentRoutineRouterRouteArgs> {
+  CurrentRoutineRouterRoute({
+    Key? key,
+    required int routineId,
+    Routine? cache,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CurrentRoutineRouterRoute.name,
+          args: CurrentRoutineRouterRouteArgs(
+            key: key,
+            routineId: routineId,
+            cache: cache,
+          ),
+          rawPathParams: {'routineId': routineId},
+          initialChildren: children,
+        );
+
+  static const String name = 'CurrentRoutineRouterRoute';
+
+  static const PageInfo<CurrentRoutineRouterRouteArgs> page =
+      PageInfo<CurrentRoutineRouterRouteArgs>(name);
+}
+
+class CurrentRoutineRouterRouteArgs {
+  const CurrentRoutineRouterRouteArgs({
+    this.key,
+    required this.routineId,
+    this.cache,
+  });
+
+  final Key? key;
+
+  final int routineId;
+
+  final Routine? cache;
+
+  @override
+  String toString() {
+    return 'CurrentRoutineRouterRouteArgs{key: $key, routineId: $routineId, cache: $cache}';
+  }
+}
+
+/// generated route for
+/// [RepetitionAddPage]
+class RepetitionAddRoute extends PageRouteInfo<void> {
+  const RepetitionAddRoute({List<PageRouteInfo>? children})
+      : super(
+          RepetitionAddRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RepetitionAddRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RepetitionUpdatePage]
+class RepetitionUpdateRoute extends PageRouteInfo<RepetitionUpdateRouteArgs> {
+  RepetitionUpdateRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RepetitionUpdateRoute.name,
+          args: RepetitionUpdateRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'RepetitionUpdateRoute';
+
+  static const PageInfo<RepetitionUpdateRouteArgs> page =
+      PageInfo<RepetitionUpdateRouteArgs>(name);
+}
+
+class RepetitionUpdateRouteArgs {
+  const RepetitionUpdateRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RepetitionUpdateRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -117,17 +235,10 @@ class RoutineRouterRoute extends PageRouteInfo<void> {
 class RoutineUpdateRoute extends PageRouteInfo<RoutineUpdateRouteArgs> {
   RoutineUpdateRoute({
     Key? key,
-    required int routineId,
-    Routine? cache,
     List<PageRouteInfo>? children,
   }) : super(
           RoutineUpdateRoute.name,
-          args: RoutineUpdateRouteArgs(
-            key: key,
-            routineId: routineId,
-            cache: cache,
-          ),
-          rawPathParams: {'routineId': routineId},
+          args: RoutineUpdateRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -138,20 +249,12 @@ class RoutineUpdateRoute extends PageRouteInfo<RoutineUpdateRouteArgs> {
 }
 
 class RoutineUpdateRouteArgs {
-  const RoutineUpdateRouteArgs({
-    this.key,
-    required this.routineId,
-    this.cache,
-  });
+  const RoutineUpdateRouteArgs({this.key});
 
   final Key? key;
 
-  final int routineId;
-
-  final Routine? cache;
-
   @override
   String toString() {
-    return 'RoutineUpdateRouteArgs{key: $key, routineId: $routineId, cache: $cache}';
+    return 'RoutineUpdateRouteArgs{key: $key}';
   }
 }

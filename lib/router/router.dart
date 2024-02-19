@@ -5,6 +5,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../feature/root/ui/root_router_page.dart';
 import '../feature/routine/data/routine.dart';
+import '../feature/routine/ui/current_routine_router_page.dart';
+import '../feature/routine/ui/repetition_add_page.dart';
+import '../feature/routine/ui/repetition_update_page.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
 import '../feature/routine/ui/routine_router_page.dart';
@@ -53,8 +56,19 @@ class AppRouter extends _$AppRouter {
             page: RoutineAddRoute.page,
           ),
           AutoRoute(
-            path: ':routineId/update',
-            page: RoutineUpdateRoute.page,
+            path: ':routineId',
+            page: CurrentRoutineRouterRoute.page,
+            children: [
+              AutoRoute(
+                initial: true,
+                path: 'update',
+                page: RoutineUpdateRoute.page,
+              ),
+              AutoRoute(
+                path: 'repetition',
+                page: RepetitionUpdateRoute.page,
+              ),
+            ],
           ),
         ],
       );
