@@ -56,6 +56,10 @@ class AppRouter extends _$AppRouter {
             page: RoutineAddRoute.page,
           ),
           AutoRoute(
+            path: 'repetition',
+            page: RepetitionAddRoute.page,
+          ),
+          AutoRoute(
             path: ':routineId',
             page: CurrentRoutineRouterRoute.page,
             children: [
