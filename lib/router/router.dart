@@ -69,7 +69,7 @@ class AppRouter extends _$AppRouter {
                 page: RoutineUpdateRoute.page,
               ),
               AutoRoute(
-                path: 'repetition',
+                path: 'update/repetition',
                 page: RepetitionUpdateRoute.page,
               ),
             ],
