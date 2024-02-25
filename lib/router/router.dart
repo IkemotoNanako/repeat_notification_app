@@ -1,78 +1,79 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../feature/root/ui/root_router_page.dart';
 import '../feature/routine/data/routine.dart';
-import '../feature/routine/state/current_routine.dart';
+import '../feature/routine/ui/current_routine_router_page.dart';
+import '../feature/routine/ui/repetition_add_page.dart';
+import '../feature/routine/ui/repetition_update_page.dart';
 import '../feature/routine/ui/routine_add_page.dart';
 import '../feature/routine/ui/routine_index_page.dart';
+import '../feature/routine/ui/routine_router_page.dart';
 import '../feature/routine/ui/routine_update_page.dart';
 
 part 'router.g.dart';
+part 'router.gr.dart';
 
 @riverpod
-GoRouter appRouter(AppRouterRef ref) {
-  final router = GoRouter(
-    initialLocation: '/routine',
-    routes: $appRoutes,
-  );
-  ref.onDispose(router.dispose);
-  return router;
+Raw<AppRouter> appRouter(AppRouterRef ref) {
+  return AppRouter(ref);
 }
 
-@TypedGoRoute<RoutineIndexRoute>(
-  path: '/routine',
-  routes: [
-    TypedGoRoute<RoutineAddRoute>(
-      path: 'add',
-    ),
-    TypedGoRoute<RoutineUpdateRoute>(
-      path: ':routineId/update',
-    ),
-  ],
-)
-class RoutineIndexRoute extends GoRouteData {
-  const RoutineIndexRoute();
+final routerProvider = Provider((ref) {
+  return AppRouter(ref);
+});
+
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends _$AppRouter {
+  AppRouter(this.ref);
+
+  final Ref ref;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const RoutineIndexPage();
-  }
-}
-
-class RoutineAddRoute extends GoRouteData {
-  const RoutineAddRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const RoutineAddPage();
-  }
-}
-
-class RoutineUpdateRoute extends GoRouteData {
-  const RoutineUpdateRoute({
-    required this.routineId,
-    this.$extra,
-  });
-
-  factory RoutineUpdateRoute.fromRoutine(Routine routine) => RoutineUpdateRoute(
-        routineId: routine.id,
-        $extra: routine,
-      );
-
-  final int routineId;
-  final Routine? $extra;
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return ProviderScope(
-      overrides: [
-        currentRoutineParamsProvider.overrideWithValue(
-          RoutineParams(routineId: routineId, cache: $extra),
+  List<AutoRoute> get routes => [
+        AutoRoute(
+          path: '/',
+          page: RootRouterRoute.page,
+          children: [
+            routineRouterRoute,
+          ],
         ),
-      ],
-      child: const RoutineUpdatePage(),
-    );
-  }
+      ];
+
+  AutoRoute get routineRouterRoute => AutoRoute(
+        initial: true,
+        path: 'routine',
+        page: RoutineRouterRoute.page,
+        children: [
+          AutoRoute(
+            initial: true,
+            page: RoutineIndexRoute.page,
+          ),
+          AutoRoute(
+            path: 'add',
+            page: RoutineAddRoute.page,
+          ),
+          AutoRoute(
+            path: 'repetition',
+            page: RepetitionAddRoute.page,
+          ),
+          AutoRoute(
+            path: ':routineId',
+            page: CurrentRoutineRouterRoute.page,
+            children: [
+              AutoRoute(
+                initial: true,
+                path: 'update',
+                page: RoutineUpdateRoute.page,
+              ),
+              AutoRoute(
+                path: 'update/repetition',
+                page: RepetitionUpdateRoute.page,
+              ),
+            ],
+          ),
+        ],
+      );
 }

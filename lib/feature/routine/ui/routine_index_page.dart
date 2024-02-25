@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -11,6 +12,7 @@ import '../use_case/delete_routine.dart';
 import '../use_case/update_routine_state.dart';
 import 'component/navigate_routine_add_page.dart';
 
+@RoutePage()
 class RoutineIndexPage extends StatelessWidget {
   const RoutineIndexPage({super.key});
 
@@ -82,7 +84,9 @@ class _ListTile extends ConsumerWidget {
         ],
       ),
       child: ListTile(
-        onTap: () => RoutineUpdateRoute.fromRoutine(routine).go(context),
+        onTap: () => context.navigateTo(
+          CurrentRoutineRouterRoute(routineId: routine.id, cache: routine),
+        ),
         title: Text(
           routine.notificationTimeOfDay.format(context),
           style: context.displayMedium?.copyWith(

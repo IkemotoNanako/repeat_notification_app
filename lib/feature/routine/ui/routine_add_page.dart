@@ -1,14 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/ui/component/material.dart';
-import '../data/routine.dart';
+import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
-import 'routine_repetition_select_page.dart';
 
+@RoutePage()
 class RoutineAddPage extends StatelessWidget {
   const RoutineAddPage({super.key});
 
@@ -93,20 +94,7 @@ class _RepetitionListTile extends ConsumerWidget {
           .select((value) => value.repetitionWeeks),
     );
     return ListTile(
-      onTap: () async {
-        final selectedRepetitionWeeks = await Navigator.of(context).push(
-          MaterialPageRoute<List<RepetitionWeek>>(
-            builder: (context) => RoutineRepetitionSelectPage(
-              initialRepetitionWeeks: repetitionWeeks,
-            ),
-          ),
-        );
-        if (selectedRepetitionWeeks != null) {
-          ref
-              .read(additionalRoutineFormValuesNotifierProvider.notifier)
-              .updateRepetitionWeeks(selectedRepetitionWeeks);
-        }
-      },
+      onTap: () => context.navigateTo(const RepetitionAddRoute()),
       title: Row(
         children: [
           const Expanded(

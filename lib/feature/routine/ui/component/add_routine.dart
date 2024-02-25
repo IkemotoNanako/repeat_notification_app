@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/ui/component/button_loading.dart';
 import '../../../../core/ui/component/riverpod.dart';
@@ -15,7 +15,7 @@ class AddRoutineButton extends ConsumerWidget {
     ref.listenAsync(
       addRoutineUseCaseProvider,
       // 処理終了後に前の画面に戻る
-      success: (_) => context.pop(),
+      success: (_) => context.popRoute(),
     );
 
     // UseCaseがローディング状態かどうか

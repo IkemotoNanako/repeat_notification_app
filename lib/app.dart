@@ -19,7 +19,7 @@ class App extends ConsumerWidget {
       theme: lightThemeData,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
-      routerConfig: appRouter,
+      routerConfig: appRouter.config(),
     );
   }
 }
