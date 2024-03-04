@@ -52,6 +52,14 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
       );
     }
   }
+
+  /// ローカル通知を削除する
+  Future<void> delete(Routine routine) async {
+    final notifications = routine.toNotifications();
+    for (final notification in notifications) {
+      await cancel(notification.notificationId);
+    }
+  }
 }
 
 extension on Routine {
