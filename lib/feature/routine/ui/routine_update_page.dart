@@ -72,7 +72,17 @@ class _NotificationTimeButton extends ConsumerWidget {
       ),
     );
     return TextButton(
-      onPressed: () => context.navigateTo(RepetitionUpdateRoute()),
+      onPressed: () async {
+        final time = await showTimePicker(
+          context: context,
+          initialTime: notificationTimeOfDay,
+        );
+        if (time != null) {
+          ref
+              .read(updatedRoutineFormValuesNotifierProvider.notifier)
+              .updateNotificationTime(time);
+        }
+      },
       child: Text(
         notificationTimeOfDay.format(context),
         style: const TextStyle(
