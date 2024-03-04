@@ -12,6 +12,36 @@ extension RoutineX on Routine {
         hour: notificationTime ~/ 3600,
         minute: (notificationTime % 3600) ~/ 60,
       );
+
+  /// 最初の通知日時
+  DateTime get firstNotificationDtime {
+    final now = DateTime.now();
+    var dtime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      notificationTimeOfDay.hour,
+      notificationTimeOfDay.minute,
+    );
+    if (dtime.isBefore(now)) {
+      // 過去の時間の場合は翌日にする
+      dtime = dtime.add(const Duration(days: 1));
+    }
+    return dtime;
+  }
+
+  /// 繰り返し通知の日時
+  List<DateTime> get repetitionNotificationDtimes {
+    final firstNotificationDtime = this.firstNotificationDtime;
+    return repetitionWeeks.map((e) {
+      var dtime = firstNotificationDtime;
+      // 曜日が一致するまで進める
+      while (dtime.weekday != e.index + 1) {
+        dtime = dtime.add(const Duration(days: 1));
+      }
+      return dtime;
+    }).toList();
+  }
 }
 
 extension RepetitionWeekX on RepetitionWeek {
