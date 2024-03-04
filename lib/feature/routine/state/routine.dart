@@ -10,7 +10,7 @@ part 'routine.g.dart';
 extension RoutineX on Routine {
   TimeOfDay get notificationTimeOfDay => TimeOfDay(
         hour: notificationTime ~/ 3600,
-        minute: notificationTime % 60,
+        minute: (notificationTime % 3600) ~/ 60,
       );
 }
 
