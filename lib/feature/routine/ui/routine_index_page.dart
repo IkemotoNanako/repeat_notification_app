@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../core/ui/component/material.dart';
 import '../../../core/ui/component/riverpod.dart';
 import '../../../router/router.dart';
+import '../../debug/ui/component/navigate_debug_button.dart';
 import '../data/routine.dart';
 import '../state/routine.dart';
 import '../use_case/delete_routine.dart';
@@ -22,6 +23,7 @@ class RoutineIndexPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('ルーティン'),
         actions: const [
+          NavigateDebugButton(),
           NavigateRoutineAddPageButton(),
         ],
       ),

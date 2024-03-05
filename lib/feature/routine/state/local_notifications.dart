@@ -24,6 +24,11 @@ class RoutineLocalNotification with _$RoutineLocalNotification {
   /// 例えば、ルーティンIDが52で、月曜日の場合、通知IDは521になる（月〜日＝1〜7）。
   /// 例えば、ルーティンIDが105で、曜日がない場合、通知IDは1050になる。
   int get notificationId => routineId * 10 + (week ?? 0);
+
+  /// 通知IDからルーティンIDを抽出する
+  static int extractRoutineId(int notificationId) {
+    return notificationId ~/ 10;
+  }
 }
 
 extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
@@ -62,7 +67,7 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
   }
 }
 
-extension on Routine {
+extension RoutineX on Routine {
   List<RoutineLocalNotification> toNotifications() {
     if (repetitionWeeks.isEmpty) {
       return [
