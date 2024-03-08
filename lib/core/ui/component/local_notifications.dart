@@ -24,10 +24,10 @@ class _LocalNotificationsState extends ConsumerState<LocalNotifications> {
   @override
   void initState() {
     super.initState();
-    final plugin = ref.read(localNotificationsPluginProvider);
-    unawaited(plugin.requestPermission());
-    unawaited(
-      plugin.initialize(
+    unawaited(() async {
+      final plugin = ref.read(localNotificationsPluginProvider);
+      await plugin.requestPermission();
+      await plugin.initialize(
         InitializationSettings(
           android: const AndroidInitializationSettings(
             '@mipmap/ic_launcher',
@@ -37,8 +37,8 @@ class _LocalNotificationsState extends ConsumerState<LocalNotifications> {
           ),
         ),
         onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
-      ),
-    );
+      );
+    }());
   }
 
   Future<void> _onDidReceiveLocalNotification(
