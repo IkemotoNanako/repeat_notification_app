@@ -135,7 +135,7 @@ class __$$RoutineFormValuesImplCopyWithImpl<$Res>
 
 class _$RoutineFormValuesImpl extends _RoutineFormValues {
   const _$RoutineFormValuesImpl(
-      {this.notificationTimeOfDay = const TimeOfDay(hour: 7, minute: 0),
+      {required this.notificationTimeOfDay,
       final List<RepetitionWeek> repetitionWeeks = const <RepetitionWeek>[],
       this.enableSound = true,
       this.enablePush = true})
@@ -143,7 +143,6 @@ class _$RoutineFormValuesImpl extends _RoutineFormValues {
         super._();
 
   @override
-  @JsonKey()
   final TimeOfDay notificationTimeOfDay;
   final List<RepetitionWeek> _repetitionWeeks;
   @override
@@ -199,7 +198,7 @@ class _$RoutineFormValuesImpl extends _RoutineFormValues {
 
 abstract class _RoutineFormValues extends RoutineFormValues {
   const factory _RoutineFormValues(
-      {final TimeOfDay notificationTimeOfDay,
+      {required final TimeOfDay notificationTimeOfDay,
       final List<RepetitionWeek> repetitionWeeks,
       final bool enableSound,
       final bool enablePush}) = _$RoutineFormValuesImpl;

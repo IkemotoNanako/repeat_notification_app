@@ -9,7 +9,9 @@ part of 'local_notifications.dart';
 String _$registeredRoutineLocalNotificationsHash() =>
     r'967a581bf14d252626c514afb148bf3294988eee';
 
-/// See also [registeredRoutineLocalNotifications].
+/// 端末に登録済みの通知要求の一覧を取得して、[RoutineLocalNotification] に変換して返す。
+///
+/// Copied from [registeredRoutineLocalNotifications].
 @ProviderFor(registeredRoutineLocalNotifications)
 final registeredRoutineLocalNotificationsProvider =
     AutoDisposeFutureProvider<List<RoutineLocalNotification>>.internal(

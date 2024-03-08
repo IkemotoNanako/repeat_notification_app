@@ -13,7 +13,7 @@ part 'routine_form_values.g.dart';
 @freezed
 class RoutineFormValues with _$RoutineFormValues {
   const factory RoutineFormValues({
-    @Default(TimeOfDay(hour: 7, minute: 0)) TimeOfDay notificationTimeOfDay,
+    required TimeOfDay notificationTimeOfDay,
     @Default(<RepetitionWeek>[]) List<RepetitionWeek> repetitionWeeks,
     @Default(true) bool enableSound,
     @Default(true) bool enablePush,
@@ -42,7 +42,9 @@ class AdditionalRoutineFormValuesNotifier
     with _RoutineFormValuesNotifier {
   @override
   RoutineFormValues build() {
-    return const RoutineFormValues();
+    return RoutineFormValues(
+      notificationTimeOfDay: TimeOfDay.now(),
+    );
   }
 }
 

@@ -7,7 +7,7 @@ part of 'routine_form_values.dart';
 // **************************************************************************
 
 String _$additionalRoutineFormValuesNotifierHash() =>
-    r'e3d99c6e32d1791d37028fc88bb67403f052935e';
+    r'0dd43413bdccecbd577950177e817b83d30d6f7b';
 
 /// See also [AdditionalRoutineFormValuesNotifier].
 @ProviderFor(AdditionalRoutineFormValuesNotifier)
