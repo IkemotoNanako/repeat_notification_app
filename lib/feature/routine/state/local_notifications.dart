@@ -42,7 +42,7 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
       await zonedSchedule(
         notification.notificationId,
         'ルーティン',
-        '時間になりました',
+        routine.label,
         notification.scheduledDate,
         NotificationDetails(
           android: AndroidNotificationDetails(

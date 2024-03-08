@@ -16,6 +16,7 @@ class RoutineFormValues with _$RoutineFormValues {
     required TimeOfDay notificationTimeOfDay,
     @Default(<RepetitionWeek>[]) List<RepetitionWeek> repetitionWeeks,
     @Default(true) bool enableSound,
+    @Default('') String label,
   }) = _RoutineFormValues;
   const RoutineFormValues._();
 
@@ -23,6 +24,7 @@ class RoutineFormValues with _$RoutineFormValues {
         notificationTimeOfDay: entity.notificationTimeOfDay,
         repetitionWeeks: entity.repetitionWeeks,
         enableSound: entity.enableSound,
+        label: entity.label,
       );
 
   /// エンティティに変換する
@@ -30,7 +32,8 @@ class RoutineFormValues with _$RoutineFormValues {
     ..notificationTime =
         notificationTimeOfDay.hour * 3600 + notificationTimeOfDay.minute * 60
     ..repetitionWeeks = repetitionWeeks
-    ..enableSound = enableSound;
+    ..enableSound = enableSound
+    ..label = label.isEmpty ? 'アラーム' : label;
 }
 
 @riverpod
@@ -86,5 +89,9 @@ mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
   // ignore: avoid_positional_boolean_parameters
   void updateEnableSound(bool value) {
     state = state.copyWith(enableSound: value);
+  }
+
+  void updateLabel(String value) {
+    state = state.copyWith(label: value);
   }
 }

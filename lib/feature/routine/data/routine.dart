@@ -19,6 +19,9 @@ class Routine {
   /// サウンド通知の有無
   bool enableSound = true;
 
+  /// ラベル
+  String label = 'アラーム';
+
   /// 作成日時
   DateTime createdAt = DateTime.now();
 

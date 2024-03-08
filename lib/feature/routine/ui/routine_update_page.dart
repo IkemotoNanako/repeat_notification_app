@@ -8,6 +8,7 @@ import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
+import 'component/label_text_field.dart';
 import 'component/update_routine.dart';
 
 @RoutePage()
@@ -50,6 +51,7 @@ class _Body extends StatelessWidget {
           ),
           Gap(32),
           _RepetitionListTile(),
+          _UpdateLabelListTile(),
           _EnableSoundListTile(),
           Gap(32),
           DeleteCurrentRoutineButton(),
@@ -118,6 +120,34 @@ class _RepetitionListTile extends ConsumerWidget {
         ],
       ),
       trailing: const Icon(Icons.navigate_next),
+    );
+  }
+}
+
+class _UpdateLabelListTile extends ConsumerWidget {
+  const _UpdateLabelListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final label = ref.watch(
+      updatedRoutineFormValuesNotifierProvider.select((value) => value.label),
+    );
+    return ListTile(
+      title: Row(
+        children: [
+          const Text('ラベル'),
+          Expanded(
+            child: LabelTextField(
+              label: label,
+              onChanged: (value) {
+                ref
+                    .read(updatedRoutineFormValuesNotifierProvider.notifier)
+                    .updateLabel(value);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

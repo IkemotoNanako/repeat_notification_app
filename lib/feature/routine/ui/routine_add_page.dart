@@ -8,6 +8,7 @@ import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
+import 'component/label_text_field.dart';
 
 @RoutePage()
 class RoutineAddPage extends StatelessWidget {
@@ -44,6 +45,7 @@ class _Body extends StatelessWidget {
           ),
           Gap(32),
           _RepetitionListTile(),
+          _UpdateLabelListTile(),
           _EnableSoundListTile(),
         ],
       ),
@@ -108,6 +110,35 @@ class _RepetitionListTile extends ConsumerWidget {
         ],
       ),
       trailing: const Icon(Icons.navigate_next),
+    );
+  }
+}
+
+class _UpdateLabelListTile extends ConsumerWidget {
+  const _UpdateLabelListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final label = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.label),
+    );
+    return ListTile(
+      title: Row(
+        children: [
+          const Text('ラベル'),
+          Expanded(
+            child: LabelTextField(
+              label: label,
+              onChanged: (value) {
+                ref
+                    .read(additionalRoutineFormValuesNotifierProvider.notifier)
+                    .updateLabel(value);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
