@@ -16,7 +16,6 @@ class RoutineFormValues with _$RoutineFormValues {
     required TimeOfDay notificationTimeOfDay,
     @Default(<RepetitionWeek>[]) List<RepetitionWeek> repetitionWeeks,
     @Default(true) bool enableSound,
-    @Default(true) bool enablePush,
   }) = _RoutineFormValues;
   const RoutineFormValues._();
 
@@ -24,7 +23,6 @@ class RoutineFormValues with _$RoutineFormValues {
         notificationTimeOfDay: entity.notificationTimeOfDay,
         repetitionWeeks: entity.repetitionWeeks,
         enableSound: entity.enableSound,
-        enablePush: entity.enablePush,
       );
 
   /// エンティティに変換する
@@ -32,8 +30,7 @@ class RoutineFormValues with _$RoutineFormValues {
     ..notificationTime =
         notificationTimeOfDay.hour * 3600 + notificationTimeOfDay.minute * 60
     ..repetitionWeeks = repetitionWeeks
-    ..enableSound = enableSound
-    ..enablePush = enablePush;
+    ..enableSound = enableSound;
 }
 
 @riverpod
@@ -89,10 +86,5 @@ mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
   // ignore: avoid_positional_boolean_parameters
   void updateEnableSound(bool value) {
     state = state.copyWith(enableSound: value);
-  }
-
-  // ignore: avoid_positional_boolean_parameters
-  void updateEnablePush(bool value) {
-    state = state.copyWith(enablePush: value);
   }
 }

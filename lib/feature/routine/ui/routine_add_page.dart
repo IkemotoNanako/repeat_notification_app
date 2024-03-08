@@ -45,7 +45,6 @@ class _Body extends StatelessWidget {
           Gap(32),
           _RepetitionListTile(),
           _EnableSoundListTile(),
-          _EnablePushListTile(),
         ],
       ),
     );
@@ -129,27 +128,6 @@ class _EnableSoundListTile extends ConsumerWidget {
         ref
             .read(additionalRoutineFormValuesNotifierProvider.notifier)
             .updateEnableSound(value);
-      },
-    );
-  }
-}
-
-class _EnablePushListTile extends ConsumerWidget {
-  const _EnablePushListTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enablePush = ref.watch(
-      additionalRoutineFormValuesNotifierProvider
-          .select((value) => value.enablePush),
-    );
-    return SwitchListTile(
-      title: const Text('プッシュ通知'),
-      value: enablePush,
-      onChanged: (value) {
-        ref
-            .read(additionalRoutineFormValuesNotifierProvider.notifier)
-            .updateEnablePush(value);
       },
     );
   }

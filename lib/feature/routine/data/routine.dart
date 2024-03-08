@@ -19,9 +19,6 @@ class Routine {
   /// サウンド通知の有無
   bool enableSound = true;
 
-  /// プッシュ通知の有無
-  bool enablePush = true;
-
   /// 作成日時
   DateTime createdAt = DateTime.now();
 

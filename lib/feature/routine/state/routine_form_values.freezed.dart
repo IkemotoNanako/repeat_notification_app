@@ -20,7 +20,6 @@ mixin _$RoutineFormValues {
   List<RepetitionWeek> get repetitionWeeks =>
       throw _privateConstructorUsedError;
   bool get enableSound => throw _privateConstructorUsedError;
-  bool get enablePush => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RoutineFormValuesCopyWith<RoutineFormValues> get copyWith =>
@@ -36,8 +35,7 @@ abstract class $RoutineFormValuesCopyWith<$Res> {
   $Res call(
       {TimeOfDay notificationTimeOfDay,
       List<RepetitionWeek> repetitionWeeks,
-      bool enableSound,
-      bool enablePush});
+      bool enableSound});
 }
 
 /// @nodoc
@@ -56,7 +54,6 @@ class _$RoutineFormValuesCopyWithImpl<$Res, $Val extends RoutineFormValues>
     Object? notificationTimeOfDay = null,
     Object? repetitionWeeks = null,
     Object? enableSound = null,
-    Object? enablePush = null,
   }) {
     return _then(_value.copyWith(
       notificationTimeOfDay: null == notificationTimeOfDay
@@ -70,10 +67,6 @@ class _$RoutineFormValuesCopyWithImpl<$Res, $Val extends RoutineFormValues>
       enableSound: null == enableSound
           ? _value.enableSound
           : enableSound // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enablePush: null == enablePush
-          ? _value.enablePush
-          : enablePush // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -90,8 +83,7 @@ abstract class _$$RoutineFormValuesImplCopyWith<$Res>
   $Res call(
       {TimeOfDay notificationTimeOfDay,
       List<RepetitionWeek> repetitionWeeks,
-      bool enableSound,
-      bool enablePush});
+      bool enableSound});
 }
 
 /// @nodoc
@@ -108,7 +100,6 @@ class __$$RoutineFormValuesImplCopyWithImpl<$Res>
     Object? notificationTimeOfDay = null,
     Object? repetitionWeeks = null,
     Object? enableSound = null,
-    Object? enablePush = null,
   }) {
     return _then(_$RoutineFormValuesImpl(
       notificationTimeOfDay: null == notificationTimeOfDay
@@ -123,10 +114,6 @@ class __$$RoutineFormValuesImplCopyWithImpl<$Res>
           ? _value.enableSound
           : enableSound // ignore: cast_nullable_to_non_nullable
               as bool,
-      enablePush: null == enablePush
-          ? _value.enablePush
-          : enablePush // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -137,8 +124,7 @@ class _$RoutineFormValuesImpl extends _RoutineFormValues {
   const _$RoutineFormValuesImpl(
       {required this.notificationTimeOfDay,
       final List<RepetitionWeek> repetitionWeeks = const <RepetitionWeek>[],
-      this.enableSound = true,
-      this.enablePush = true})
+      this.enableSound = true})
       : _repetitionWeeks = repetitionWeeks,
         super._();
 
@@ -156,13 +142,10 @@ class _$RoutineFormValuesImpl extends _RoutineFormValues {
   @override
   @JsonKey()
   final bool enableSound;
-  @override
-  @JsonKey()
-  final bool enablePush;
 
   @override
   String toString() {
-    return 'RoutineFormValues(notificationTimeOfDay: $notificationTimeOfDay, repetitionWeeks: $repetitionWeeks, enableSound: $enableSound, enablePush: $enablePush)';
+    return 'RoutineFormValues(notificationTimeOfDay: $notificationTimeOfDay, repetitionWeeks: $repetitionWeeks, enableSound: $enableSound)';
   }
 
   @override
@@ -175,18 +158,12 @@ class _$RoutineFormValuesImpl extends _RoutineFormValues {
             const DeepCollectionEquality()
                 .equals(other._repetitionWeeks, _repetitionWeeks) &&
             (identical(other.enableSound, enableSound) ||
-                other.enableSound == enableSound) &&
-            (identical(other.enablePush, enablePush) ||
-                other.enablePush == enablePush));
+                other.enableSound == enableSound));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      notificationTimeOfDay,
-      const DeepCollectionEquality().hash(_repetitionWeeks),
-      enableSound,
-      enablePush);
+  int get hashCode => Object.hash(runtimeType, notificationTimeOfDay,
+      const DeepCollectionEquality().hash(_repetitionWeeks), enableSound);
 
   @JsonKey(ignore: true)
   @override
@@ -200,8 +177,7 @@ abstract class _RoutineFormValues extends RoutineFormValues {
   const factory _RoutineFormValues(
       {required final TimeOfDay notificationTimeOfDay,
       final List<RepetitionWeek> repetitionWeeks,
-      final bool enableSound,
-      final bool enablePush}) = _$RoutineFormValuesImpl;
+      final bool enableSound}) = _$RoutineFormValuesImpl;
   const _RoutineFormValues._() : super._();
 
   @override
@@ -210,8 +186,6 @@ abstract class _RoutineFormValues extends RoutineFormValues {
   List<RepetitionWeek> get repetitionWeeks;
   @override
   bool get enableSound;
-  @override
-  bool get enablePush;
   @override
   @JsonKey(ignore: true)
   _$$RoutineFormValuesImplCopyWith<_$RoutineFormValuesImpl> get copyWith =>

@@ -51,7 +51,6 @@ class _Body extends StatelessWidget {
           Gap(32),
           _RepetitionListTile(),
           _EnableSoundListTile(),
-          _EnablePushListTile(),
           Gap(32),
           DeleteCurrentRoutineButton(),
           Gap(32),
@@ -140,27 +139,6 @@ class _EnableSoundListTile extends ConsumerWidget {
         ref
             .read(updatedRoutineFormValuesNotifierProvider.notifier)
             .updateEnableSound(value);
-      },
-    );
-  }
-}
-
-class _EnablePushListTile extends ConsumerWidget {
-  const _EnablePushListTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enablePush = ref.watch(
-      updatedRoutineFormValuesNotifierProvider
-          .select((value) => value.enablePush),
-    );
-    return SwitchListTile(
-      title: const Text('プッシュ通知'),
-      value: enablePush,
-      onChanged: (value) {
-        ref
-            .read(updatedRoutineFormValuesNotifierProvider.notifier)
-            .updateEnablePush(value);
       },
     );
   }
