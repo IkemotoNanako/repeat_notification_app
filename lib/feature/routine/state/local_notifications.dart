@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -46,8 +48,13 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
         notification.scheduledDate,
         NotificationDetails(
           android: AndroidNotificationDetails(
-            'repeat-notification-${notification.notificationId}',
-            'repeat-notification',
+            // Androidにおいてサウンドを再生するかどうかはチャンネルIDを生成したときにのみ決定され、
+            // 変更することはできないため、毎回チャンネルIDが変わるようにランダムな文字列を付与する必要がある。
+            'repeat-notification-app-${routine.id}-${_generateNonce(6)}',
+
+            // チャンネル名は端末設定に表示されるため、ルーティン一覧画面でも表示しているわかりやすい名称にしている。
+            routine.title,
+            playSound: routine.enableSound,
           ),
         ),
         uiLocalNotificationDateInterpretation:
@@ -56,6 +63,19 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
         matchDateTimeComponents: notification.dateTimeComponents,
       );
     }
+  }
+
+  /// ランダムな文字列を生成する
+  ///
+  /// 参考: https://zenn.dev/makumaaku/articles/b8790d0c660e58
+  String _generateNonce([int length = 32]) {
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz';
+    final random = Random.secure();
+    final randomStr =
+        List.generate(length, (_) => charset[random.nextInt(charset.length)])
+            .join();
+    return randomStr;
   }
 
   /// ローカル通知を削除する

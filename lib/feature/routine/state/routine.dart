@@ -42,6 +42,13 @@ extension RoutineX on Routine {
       return dtime;
     }).toList();
   }
+
+  String get title {
+    if (repetitionWeeks.isEmpty) {
+      return label;
+    }
+    return '$label、 ${repetitionWeeks.title}';
+  }
 }
 
 extension RepetitionWeekX on RepetitionWeek {

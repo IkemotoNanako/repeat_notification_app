@@ -95,13 +95,7 @@ class _ListTile extends ConsumerWidget {
             color: routine.state ? null : context.outline,
           ),
         ),
-        subtitle: Wrap(
-          children: [
-            Text(routine.label),
-            if (routine.repetitionWeeks.isNotEmpty)
-              Text('、${routine.repetitionWeeks.title}'),
-          ],
-        ),
+        subtitle: Text(routine.title),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         trailing: Switch(
           value: routine.state,

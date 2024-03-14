@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +25,11 @@ class _LocalNotificationsState extends ConsumerState<LocalNotifications> {
     super.initState();
     unawaited(() async {
       final plugin = ref.read(localNotificationsPluginProvider);
-      await plugin.requestPermission();
+      final result = await plugin.requestPermission();
+      logger.i('requestPermission result = $result');
+      if (result == null || !result) {
+        return;
+      }
       await plugin.initialize(
         const InitializationSettings(
           android: AndroidInitializationSettings(
