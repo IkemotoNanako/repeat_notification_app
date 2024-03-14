@@ -28,41 +28,14 @@ class _LocalNotificationsState extends ConsumerState<LocalNotifications> {
       final plugin = ref.read(localNotificationsPluginProvider);
       await plugin.requestPermission();
       await plugin.initialize(
-        InitializationSettings(
-          android: const AndroidInitializationSettings(
+        const InitializationSettings(
+          android: AndroidInitializationSettings(
             '@mipmap/ic_launcher',
-          ),
-          iOS: DarwinInitializationSettings(
-            onDidReceiveLocalNotification: _onDidReceiveLocalNotification,
           ),
         ),
         onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
       );
     }());
-  }
-
-  Future<void> _onDidReceiveLocalNotification(
-    int id,
-    String? title,
-    String? body,
-    String? payload,
-  ) async {
-    await showDialog<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title ?? ''),
-        content: Text(body ?? ''),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: const Text('Ok'),
-            onPressed: () async {
-              Navigator.of(context, rootNavigator: true).pop();
-            },
-          ),
-        ],
-      ),
-    );
   }
 
   /// ローカル通知をタップしたときに呼ばれる
