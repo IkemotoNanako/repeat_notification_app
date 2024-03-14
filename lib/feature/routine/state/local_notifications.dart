@@ -56,6 +56,11 @@ extension FlutterLocalNotificationsPluginX on FlutterLocalNotificationsPlugin {
             routine.title,
             playSound: routine.enableSound,
           ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBanner: true,
+            presentSound: routine.enableSound,
+          ),
         ),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
