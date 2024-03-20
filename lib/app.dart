@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/ui/component/local_notifications.dart';
 import 'router/router.dart';
 import 'theme/theme.dart';
 
@@ -20,6 +21,11 @@ class App extends ConsumerWidget {
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [Locale('ja')],
       routerConfig: appRouter.config(),
+      builder: (context, child) {
+        return LocalNotifications(
+          child: child!,
+        );
+      },
     );
   }
 }

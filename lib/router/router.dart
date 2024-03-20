@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../feature/debug/ui/debug_page.dart';
+import '../feature/debug/ui/debug_router_page.dart';
+import '../feature/debug/ui/registered_local_notification_index_page.dart';
 import '../feature/root/ui/root_router_page.dart';
 import '../feature/routine/data/routine.dart';
 import '../feature/routine/ui/current_routine_router_page.dart';
@@ -38,6 +41,7 @@ class AppRouter extends _$AppRouter {
           page: RootRouterRoute.page,
           children: [
             routineRouterRoute,
+            debugRouterRoute,
           ],
         ),
       ];
@@ -73,6 +77,21 @@ class AppRouter extends _$AppRouter {
                 page: RepetitionUpdateRoute.page,
               ),
             ],
+          ),
+        ],
+      );
+
+  AutoRoute get debugRouterRoute => AutoRoute(
+        path: 'debug',
+        page: DebugRouterRoute.page,
+        children: [
+          AutoRoute(
+            initial: true,
+            page: DebugRoute.page,
+          ),
+          AutoRoute(
+            path: 'registered-local-notification',
+            page: RegisteredLocalNotificationIndexRoute.page,
           ),
         ],
       );

@@ -7,7 +7,7 @@ part of 'delete_routine.dart';
 // **************************************************************************
 
 String _$deleteRoutineUseCaseHash() =>
-    r'cafa19dac87720db040ead9cba6837ae427fb326';
+    r'6136b5284b78d29c119573330067dd8f6c041c2b';
 
 /// Copied from Dart SDK
 class _SystemHash {

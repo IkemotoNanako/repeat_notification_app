@@ -22,15 +22,15 @@ const RoutineSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'enablePush': PropertySchema(
-      id: 1,
-      name: r'enablePush',
-      type: IsarType.bool,
-    ),
     r'enableSound': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'enableSound',
       type: IsarType.bool,
+    ),
+    r'label': PropertySchema(
+      id: 2,
+      name: r'label',
+      type: IsarType.string,
     ),
     r'notificationTime': PropertySchema(
       id: 3,
@@ -88,6 +88,7 @@ int _routineEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.label.length * 3;
   bytesCount += 3 + object.repetitionWeeks.length * 3;
   {
     for (var i = 0; i < object.repetitionWeeks.length; i++) {
@@ -105,8 +106,8 @@ void _routineSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.createdAt);
-  writer.writeBool(offsets[1], object.enablePush);
-  writer.writeBool(offsets[2], object.enableSound);
+  writer.writeBool(offsets[1], object.enableSound);
+  writer.writeString(offsets[2], object.label);
   writer.writeLong(offsets[3], object.notificationTime);
   writer.writeStringList(
       offsets[4], object.repetitionWeeks.map((e) => e.name).toList());
@@ -122,9 +123,9 @@ Routine _routineDeserialize(
 ) {
   final object = Routine();
   object.createdAt = reader.readDateTime(offsets[0]);
-  object.enablePush = reader.readBool(offsets[1]);
-  object.enableSound = reader.readBool(offsets[2]);
+  object.enableSound = reader.readBool(offsets[1]);
   object.id = id;
+  object.label = reader.readString(offsets[2]);
   object.notificationTime = reader.readLong(offsets[3]);
   object.repetitionWeeks = reader
           .readStringList(offsets[4])
@@ -149,7 +150,7 @@ P _routineDeserializeProp<P>(
     case 1:
       return (reader.readBool(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
       return (reader.readLong(offset)) as P;
     case 4:
@@ -428,16 +429,6 @@ extension RoutineQueryFilter
     });
   }
 
-  QueryBuilder<Routine, Routine, QAfterFilterCondition> enablePushEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'enablePush',
-        value: value,
-      ));
-    });
-  }
-
   QueryBuilder<Routine, Routine, QAfterFilterCondition> enableSoundEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -496,6 +487,136 @@ extension RoutineQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'label',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'label',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'label',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterFilterCondition> labelIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'label',
+        value: '',
       ));
     });
   }
@@ -865,18 +986,6 @@ extension RoutineQuerySortBy on QueryBuilder<Routine, Routine, QSortBy> {
     });
   }
 
-  QueryBuilder<Routine, Routine, QAfterSortBy> sortByEnablePush() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'enablePush', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Routine, Routine, QAfterSortBy> sortByEnablePushDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'enablePush', Sort.desc);
-    });
-  }
-
   QueryBuilder<Routine, Routine, QAfterSortBy> sortByEnableSound() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enableSound', Sort.asc);
@@ -886,6 +995,18 @@ extension RoutineQuerySortBy on QueryBuilder<Routine, Routine, QSortBy> {
   QueryBuilder<Routine, Routine, QAfterSortBy> sortByEnableSoundDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enableSound', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterSortBy> sortByLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'label', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterSortBy> sortByLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'label', Sort.desc);
     });
   }
 
@@ -940,18 +1061,6 @@ extension RoutineQuerySortThenBy
     });
   }
 
-  QueryBuilder<Routine, Routine, QAfterSortBy> thenByEnablePush() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'enablePush', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Routine, Routine, QAfterSortBy> thenByEnablePushDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'enablePush', Sort.desc);
-    });
-  }
-
   QueryBuilder<Routine, Routine, QAfterSortBy> thenByEnableSound() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enableSound', Sort.asc);
@@ -973,6 +1082,18 @@ extension RoutineQuerySortThenBy
   QueryBuilder<Routine, Routine, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterSortBy> thenByLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'label', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QAfterSortBy> thenByLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'label', Sort.desc);
     });
   }
 
@@ -1021,15 +1142,16 @@ extension RoutineQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Routine, Routine, QDistinct> distinctByEnablePush() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'enablePush');
-    });
-  }
-
   QueryBuilder<Routine, Routine, QDistinct> distinctByEnableSound() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'enableSound');
+    });
+  }
+
+  QueryBuilder<Routine, Routine, QDistinct> distinctByLabel(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'label', caseSensitive: caseSensitive);
     });
   }
 
@@ -1072,15 +1194,15 @@ extension RoutineQueryProperty
     });
   }
 
-  QueryBuilder<Routine, bool, QQueryOperations> enablePushProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'enablePush');
-    });
-  }
-
   QueryBuilder<Routine, bool, QQueryOperations> enableSoundProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'enableSound');
+    });
+  }
+
+  QueryBuilder<Routine, String, QQueryOperations> labelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'label');
     });
   }
 

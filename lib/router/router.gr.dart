@@ -29,6 +29,24 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    DebugRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DebugPage(),
+      );
+    },
+    DebugRouterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DebugRouterPage(),
+      );
+    },
+    RegisteredLocalNotificationIndexRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RegisteredLocalNotificationIndexPage(),
+      );
+    },
     RepetitionAddRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -129,6 +147,48 @@ class CurrentRoutineRouterRouteArgs {
   String toString() {
     return 'CurrentRoutineRouterRouteArgs{key: $key, routineId: $routineId, cache: $cache}';
   }
+}
+
+/// generated route for
+/// [DebugPage]
+class DebugRoute extends PageRouteInfo<void> {
+  const DebugRoute({List<PageRouteInfo>? children})
+      : super(
+          DebugRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DebugRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DebugRouterPage]
+class DebugRouterRoute extends PageRouteInfo<void> {
+  const DebugRouterRoute({List<PageRouteInfo>? children})
+      : super(
+          DebugRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DebugRouterRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RegisteredLocalNotificationIndexPage]
+class RegisteredLocalNotificationIndexRoute extends PageRouteInfo<void> {
+  const RegisteredLocalNotificationIndexRoute({List<PageRouteInfo>? children})
+      : super(
+          RegisteredLocalNotificationIndexRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RegisteredLocalNotificationIndexRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

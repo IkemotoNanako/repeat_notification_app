@@ -7,7 +7,7 @@ part of 'update_routine_state.dart';
 // **************************************************************************
 
 String _$updateRoutineStateUseCaseHash() =>
-    r'0c2b90c300cf52ed7458af837669e211aab94dce';
+    r'df93454d1e31af2969912fd99034b1738d017d6b';
 
 /// Copied from Dart SDK
 class _SystemHash {

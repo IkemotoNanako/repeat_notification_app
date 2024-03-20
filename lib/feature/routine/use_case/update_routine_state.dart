@@ -1,7 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/data/isar/isar.dart';
+import '../../../core/data/local_notifications/local_notifications.dart';
 import '../data/routine.dart';
+import '../state/local_notifications.dart';
 
 part 'update_routine_state.g.dart';
 
@@ -21,6 +23,14 @@ class UpdateRoutineStateUseCase extends _$UpdateRoutineStateUseCase {
       await isar.writeTxn(() async {
         routine.state = value;
         await isar.routines.put(routine);
+
+        final localNotificationsPlugin =
+            ref.read(localNotificationsPluginProvider);
+        if (value) {
+          await localNotificationsPlugin.register(routine);
+        } else {
+          await localNotificationsPlugin.delete(routine);
+        }
       });
     });
   }

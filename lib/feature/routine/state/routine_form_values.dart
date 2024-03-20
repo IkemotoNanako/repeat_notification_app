@@ -13,10 +13,10 @@ part 'routine_form_values.g.dart';
 @freezed
 class RoutineFormValues with _$RoutineFormValues {
   const factory RoutineFormValues({
-    @Default(TimeOfDay(hour: 7, minute: 0)) TimeOfDay notificationTimeOfDay,
+    required TimeOfDay notificationTimeOfDay,
     @Default(<RepetitionWeek>[]) List<RepetitionWeek> repetitionWeeks,
     @Default(true) bool enableSound,
-    @Default(true) bool enablePush,
+    @Default('') String label,
   }) = _RoutineFormValues;
   const RoutineFormValues._();
 
@@ -24,7 +24,7 @@ class RoutineFormValues with _$RoutineFormValues {
         notificationTimeOfDay: entity.notificationTimeOfDay,
         repetitionWeeks: entity.repetitionWeeks,
         enableSound: entity.enableSound,
-        enablePush: entity.enablePush,
+        label: entity.label,
       );
 
   /// エンティティに変換する
@@ -33,7 +33,7 @@ class RoutineFormValues with _$RoutineFormValues {
         notificationTimeOfDay.hour * 3600 + notificationTimeOfDay.minute * 60
     ..repetitionWeeks = repetitionWeeks
     ..enableSound = enableSound
-    ..enablePush = enablePush;
+    ..label = label.isEmpty ? 'アラーム' : label;
 }
 
 @riverpod
@@ -42,7 +42,9 @@ class AdditionalRoutineFormValuesNotifier
     with _RoutineFormValuesNotifier {
   @override
   RoutineFormValues build() {
-    return const RoutineFormValues();
+    return RoutineFormValues(
+      notificationTimeOfDay: TimeOfDay.now(),
+    );
   }
 }
 
@@ -89,8 +91,7 @@ mixin _RoutineFormValuesNotifier on AutoDisposeNotifier<RoutineFormValues> {
     state = state.copyWith(enableSound: value);
   }
 
-  // ignore: avoid_positional_boolean_parameters
-  void updateEnablePush(bool value) {
-    state = state.copyWith(enablePush: value);
+  void updateLabel(String value) {
+    state = state.copyWith(label: value);
   }
 }

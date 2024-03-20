@@ -8,6 +8,7 @@ import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/delete_routine.dart';
+import 'component/label_text_field.dart';
 import 'component/update_routine.dart';
 
 @RoutePage()
@@ -50,8 +51,8 @@ class _Body extends StatelessWidget {
           ),
           Gap(32),
           _RepetitionListTile(),
+          _UpdateLabelListTile(),
           _EnableSoundListTile(),
-          _EnablePushListTile(),
           Gap(32),
           DeleteCurrentRoutineButton(),
           Gap(32),
@@ -72,7 +73,17 @@ class _NotificationTimeButton extends ConsumerWidget {
       ),
     );
     return TextButton(
-      onPressed: () => context.navigateTo(RepetitionUpdateRoute()),
+      onPressed: () async {
+        final time = await showTimePicker(
+          context: context,
+          initialTime: notificationTimeOfDay,
+        );
+        if (time != null) {
+          ref
+              .read(updatedRoutineFormValuesNotifierProvider.notifier)
+              .updateNotificationTime(time);
+        }
+      },
       child: Text(
         notificationTimeOfDay.format(context),
         style: const TextStyle(
@@ -113,6 +124,34 @@ class _RepetitionListTile extends ConsumerWidget {
   }
 }
 
+class _UpdateLabelListTile extends ConsumerWidget {
+  const _UpdateLabelListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final label = ref.watch(
+      updatedRoutineFormValuesNotifierProvider.select((value) => value.label),
+    );
+    return ListTile(
+      title: Row(
+        children: [
+          const Text('ラベル'),
+          Expanded(
+            child: LabelTextField(
+              label: label,
+              onChanged: (value) {
+                ref
+                    .read(updatedRoutineFormValuesNotifierProvider.notifier)
+                    .updateLabel(value);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _EnableSoundListTile extends ConsumerWidget {
   const _EnableSoundListTile();
 
@@ -130,27 +169,6 @@ class _EnableSoundListTile extends ConsumerWidget {
         ref
             .read(updatedRoutineFormValuesNotifierProvider.notifier)
             .updateEnableSound(value);
-      },
-    );
-  }
-}
-
-class _EnablePushListTile extends ConsumerWidget {
-  const _EnablePushListTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enablePush = ref.watch(
-      updatedRoutineFormValuesNotifierProvider
-          .select((value) => value.enablePush),
-    );
-    return SwitchListTile(
-      title: const Text('プッシュ通知'),
-      value: enablePush,
-      onChanged: (value) {
-        ref
-            .read(updatedRoutineFormValuesNotifierProvider.notifier)
-            .updateEnablePush(value);
       },
     );
   }

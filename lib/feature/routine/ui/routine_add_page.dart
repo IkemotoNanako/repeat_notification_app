@@ -8,6 +8,7 @@ import '../../../router/router.dart';
 import '../state/routine.dart';
 import '../state/routine_form_values.dart';
 import 'component/add_routine.dart';
+import 'component/label_text_field.dart';
 
 @RoutePage()
 class RoutineAddPage extends StatelessWidget {
@@ -44,8 +45,8 @@ class _Body extends StatelessWidget {
           ),
           Gap(32),
           _RepetitionListTile(),
+          _UpdateLabelListTile(),
           _EnableSoundListTile(),
-          _EnablePushListTile(),
         ],
       ),
     );
@@ -113,6 +114,35 @@ class _RepetitionListTile extends ConsumerWidget {
   }
 }
 
+class _UpdateLabelListTile extends ConsumerWidget {
+  const _UpdateLabelListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final label = ref.watch(
+      additionalRoutineFormValuesNotifierProvider
+          .select((value) => value.label),
+    );
+    return ListTile(
+      title: Row(
+        children: [
+          const Text('ラベル'),
+          Expanded(
+            child: LabelTextField(
+              label: label,
+              onChanged: (value) {
+                ref
+                    .read(additionalRoutineFormValuesNotifierProvider.notifier)
+                    .updateLabel(value);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _EnableSoundListTile extends ConsumerWidget {
   const _EnableSoundListTile();
 
@@ -129,27 +159,6 @@ class _EnableSoundListTile extends ConsumerWidget {
         ref
             .read(additionalRoutineFormValuesNotifierProvider.notifier)
             .updateEnableSound(value);
-      },
-    );
-  }
-}
-
-class _EnablePushListTile extends ConsumerWidget {
-  const _EnablePushListTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enablePush = ref.watch(
-      additionalRoutineFormValuesNotifierProvider
-          .select((value) => value.enablePush),
-    );
-    return SwitchListTile(
-      title: const Text('プッシュ通知'),
-      value: enablePush,
-      onChanged: (value) {
-        ref
-            .read(additionalRoutineFormValuesNotifierProvider.notifier)
-            .updateEnablePush(value);
       },
     );
   }
